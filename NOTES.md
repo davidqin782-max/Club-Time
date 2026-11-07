@@ -16,6 +16,7 @@
 - Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
 - Publisher-created clubs can now be deleted through two confirmations: “Are you sure?” and “Are you for real?”
 - Added gentle entrance, hover, focus, card, button, search, modal, and safety animations with reduced-motion support.
+- New publisher clubs now start as “Awaiting adult approval” and are clearly marked until a school adult reviews them.
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
 - Saves on this computer only for now.

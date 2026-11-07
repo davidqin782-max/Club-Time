@@ -33,6 +33,7 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 .confirm-modal p { color:var(--muted); line-height:1.5; }
 .confirm-actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-top:24px; }
 .danger-button { background:#a4493d; color:white; }
+.approval-note { margin:14px 0; padding:10px 12px; color:#80603f; background:#fff5e8; border:1px solid #f0d8bb; border-radius:9px; font-size:12px; line-height:1.4; }
 .modal-backdrop { animation:fade-in .2s ease both; }
 .confirm-modal { animation:modal-in .3s cubic-bezier(.2,.8,.2,1) both; }
 @media (max-width:700px) { .topbar,main { padding-left:20px; padding-right:20px; } .topbar { padding-top:20px; } .tagline { display:none; } .hero { padding:48px 0 62px; } .panel { padding:24px; } .form-footer,.section-heading { align-items:flex-start; flex-direction:column; } .form-footer { gap:18px; } .club-grid { grid-template-columns:1fr; } .search-row { align-items:stretch; flex-direction:column; } }
