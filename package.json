@@ -1,0 +1,9 @@
+{
+  "name": "club-time",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Club Time - find a club that fits you",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

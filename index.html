@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Time</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#top"><span class="brand-mark">✦</span> Club Time</a><span class="tagline">Find a club that fits you.</span></header>
+  <main id="top">
+    <section class="hero">
+      <div class="eyebrow">School & learning</div>
+      <h1>Less scrolling.<br /><span>More belonging.</span></h1>
+      <p class="hero-copy">Club Time turns a club description into a clear, friendly card so students can spot what might actually fit them.</p>
+      <a class="jump" href="#publish">Try the AI organizer <span>↓</span></a>
+    </section>
+
+    <section class="organizer panel" id="publish">
+      <div class="section-heading"><div><div class="eyebrow">One-time AI organizer</div><h2>Publish a club</h2></div><span class="step">01 / 01</span></div>
+      <p class="muted">Paste or write the club details. The AI will make them easier to understand and search.</p>
+      <form id="club-form">
+        <label for="description">What is this club about?</label>
+        <textarea id="description" rows="5" placeholder="Example: A lunchtime club where students learn photography, take pictures around school, and share tips. Beginners are welcome. We meet on Tuesdays in room 12."></textarea>
+        <div class="form-footer"><span class="privacy-note">Your key stays on this computer's server.</span><button id="publish-button" type="submit">Organize & publish <span>→</span></button></div>
+      </form>
+      <div id="status" class="status" aria-live="polite"></div>
+    </section>
+
+    <section class="clubs-section">
+      <div class="section-heading"><div><div class="eyebrow">The difference</div><h2>Clubs, made clearer.</h2></div><span id="club-count" class="count"></span></div>
+      <div class="search-row"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Search by interest, activity, or fit" /></label><button id="reset-button" class="text-button" type="button">Reset samples</button></div>
+      <div id="clubs" class="club-grid"></div>
+      <p id="empty-state" class="empty" hidden>No clubs match that search yet.</p>
+    </section>
+
+    <section class="safety"><span class="safety-icon">✓</span><div><strong>Safety check</strong><p>Every club is marked <em>unverified</em> until a student or school adult checks its details. School rules come first.</p></div></section>
+  </main>
+  <footer>Club Time · a student project for helping people find a better fit.</footer>
+  <script src="storage.js"></script><script src="app.js"></script>
+</body>
+</html>
