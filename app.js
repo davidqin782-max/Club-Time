@@ -16,9 +16,14 @@ function escapeHtml(value = '') {
   return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[character]));
 }
 
+function matchesSearch(club, query) {
+  const words = `${club.name} ${club.summary} ${club.whoItsFor} ${(club.tags || []).join(' ')}`.toLowerCase().split(/\W+/).filter(Boolean);
+  return query.split(/\s+/).filter(Boolean).every(part => words.some(word => word.startsWith(part) || part.startsWith(word)));
+}
+
 function renderClubs() {
   const term = search.value.trim().toLowerCase();
-  const visible = aiMatches ? aiMatches.map(id => clubs.find(club => club.id === id)).filter(Boolean) : clubs.filter(club => `${club.name} ${club.summary} ${club.whoItsFor} ${(club.tags || []).join(' ')}`.toLowerCase().includes(term));
+  const visible = aiMatches ? aiMatches.map(id => clubs.find(club => club.id === id)).filter(Boolean) : clubs.filter(club => !term || matchesSearch(club, term));
   count.textContent = `${visible.length} ${visible.length === 1 ? 'club' : 'clubs'}`;
   clubsElement.innerHTML = visible.map(club => `
     <article class="club-card">
