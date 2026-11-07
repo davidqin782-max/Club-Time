@@ -26,7 +26,7 @@ async function organizeClub(description) {
     body: JSON.stringify({
       model: 'gpt-5.6-luna',
       messages: [
-        { role: 'system', content: `${getBrief()}\n\nSafety additions for Club Time: Do not invent school approval, meeting facts, or promises. Keep language kind. Treat every submitted club as unverified until a student or school adult checks it. Never silently change the user's facts; summarize only what is provided and clearly label suggestions. Return only valid JSON with these keys: name, summary, whoItsFor, activities, meetingInfo, tags.` },
+        { role: 'system', content: `${getBrief()}\n\nSafety additions for Club Time: Do not invent school approval, meeting facts, or promises. Keep language kind. Treat every submitted club as unverified until a student or school adult checks it. Never silently change the user's facts; summarize only what is provided and clearly label suggestions. For the conclusion, use first person as if the club is speaking. For missing meeting details, write exactly "Not provided yet". Return only valid JSON with these keys: name, summary, conclusion, whoItsFor, activities, timeOfDay, days, duration, classroom, meetingInfo, tags.` },
         { role: 'user', content: `Organize this club description for the Club Time page. Keep it friendly and detailed, but concise. Description:\n${description}` }
       ],
     })
@@ -36,7 +36,7 @@ async function organizeClub(description) {
   const text = data.choices?.[0]?.message?.content;
   if (!text) throw new Error('The AI returned no answer');
   const club = parseJson(text);
-  return { ...club, originalDescription: description, unverified: true };
+  return { ...club, conclusion: club.conclusion || `I am ${club.name || 'this club'}: ${club.summary || 'My details are still being organized.'}`, timeOfDay: club.timeOfDay || 'Not provided yet', days: club.days || 'Not provided yet', duration: club.duration || 'Not provided yet', classroom: club.classroom || 'Not provided yet', originalDescription: description, unverified: true };
 }
 
 async function findSimilarClubs(query, clubs) {

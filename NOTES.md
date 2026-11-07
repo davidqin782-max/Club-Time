@@ -13,6 +13,7 @@
 - Tested the real publish flow successfully: the AI organized a made-up photography club, the page showed “Thinking…”, and the result saved locally.
 - Added an optional “Find with AI” search action that matches the meaning of a student's words to saved club interests; normal typing search stays instant and local.
 - Normal search also understands partial words, so searching `create` finds “Creative Makers” immediately.
+- Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
 - Saves on this computer only for now.

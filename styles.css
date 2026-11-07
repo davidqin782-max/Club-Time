@@ -12,4 +12,10 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 .original-description { margin:16px 0; padding:12px; background:#f5f8f5; border-radius:10px; }
 .original-description span { color:var(--green); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
 .original-description p { margin:6px 0 0; color:var(--ink); font-size:13px; line-height:1.45; }
+.conclusion { margin:16px 0; padding:12px; background:var(--mint); border-radius:10px; }
+.conclusion span,.meeting-details span { color:var(--green); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+.conclusion p { margin:6px 0 0; color:var(--ink); font-size:13px; line-height:1.45; }
+.meeting-details { display:grid; grid-template-columns:1fr 1fr; gap:12px; border-top:1px solid var(--line); padding-top:16px; margin-top:20px; }
+.meeting-details div { display:flex; flex-direction:column; gap:4px; }
+.meeting-details strong { font-size:13px; font-weight:500; }
 @media (max-width:700px) { .topbar,main { padding-left:20px; padding-right:20px; } .topbar { padding-top:20px; } .tagline { display:none; } .hero { padding:48px 0 62px; } .panel { padding:24px; } .form-footer,.section-heading { align-items:flex-start; flex-direction:column; } .form-footer { gap:18px; } .club-grid { grid-template-columns:1fr; } .search-row { align-items:stretch; flex-direction:column; } }
