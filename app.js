@@ -6,7 +6,11 @@ const search = document.querySelector('#search');
 const clubsElement = document.querySelector('#clubs');
 const count = document.querySelector('#club-count');
 const emptyState = document.querySelector('#empty-state');
+const searchForm = document.querySelector('#search-form');
+const semanticButton = document.querySelector('#semantic-button');
+const searchStatus = document.querySelector('#search-status');
 let clubs = loadClubs();
+let aiMatches = null;
 
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[character]));
@@ -14,7 +18,7 @@ function escapeHtml(value = '') {
 
 function renderClubs() {
   const term = search.value.trim().toLowerCase();
-  const visible = clubs.filter(club => `${club.name} ${club.summary} ${club.whoItsFor} ${(club.tags || []).join(' ')}`.toLowerCase().includes(term));
+  const visible = aiMatches ? aiMatches.map(id => clubs.find(club => club.id === id)).filter(Boolean) : clubs.filter(club => `${club.name} ${club.summary} ${club.whoItsFor} ${(club.tags || []).join(' ')}`.toLowerCase().includes(term));
   count.textContent = `${visible.length} ${visible.length === 1 ? 'club' : 'clubs'}`;
   clubsElement.innerHTML = visible.map(club => `
     <article class="club-card">
@@ -42,6 +46,19 @@ form.addEventListener('submit', async event => {
   finally { publishButton.disabled = false; }
 });
 
-search.addEventListener('input', renderClubs);
-document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; renderClubs(); status.className = 'status'; status.textContent = ''; });
+search.addEventListener('input', () => { aiMatches = null; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; renderClubs(); });
+searchForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const query = search.value.trim();
+  if (query.length < 2) { searchStatus.textContent = 'Type an interest or activity first.'; return; }
+  semanticButton.disabled = true; semanticButton.innerHTML = 'Thinking…'; searchStatus.textContent = 'AI is looking for similar meanings…';
+  try {
+    const response = await fetch('/api/search', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query, clubs }) });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Something went wrong.');
+    aiMatches = result.ids; renderClubs(); searchStatus.textContent = aiMatches.length ? `AI found ${aiMatches.length} club${aiMatches.length === 1 ? '' : 's'} that may fit “${query}”.` : `AI could not find a close match for “${query}”.`;
+  } catch (error) { aiMatches = null; renderClubs(); searchStatus.textContent = error.message; }
+  finally { semanticButton.disabled = false; semanticButton.innerHTML = 'Find with AI <span>→</span>'; }
+});
+document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; });
 renderClubs();

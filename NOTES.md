@@ -11,6 +11,7 @@
 - Version 1 has a simple publish flow: enter one club description, ask the AI to organize it, review the result as a club card, and search saved clubs.
 - The local server reads the key from `.env` and calls `gpt-5.6-luna`; the key is never sent to the page.
 - Tested the real publish flow successfully: the AI organized a made-up photography club, the page showed “Thinking…”, and the result saved locally.
+- Added an optional “Find with AI” search action that matches the meaning of a student's words to saved club interests; normal typing search stays instant and local.
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
 - Saves on this computer only for now.

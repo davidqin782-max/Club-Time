@@ -29,7 +29,8 @@
 
     <section class="clubs-section">
       <div class="section-heading"><div><div class="eyebrow">The difference</div><h2>Clubs, made clearer.</h2></div><span id="club-count" class="count"></span></div>
-      <div class="search-row"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Search by interest, activity, or fit" /></label><button id="reset-button" class="text-button" type="button">Reset samples</button></div>
+      <form id="search-form" class="search-row"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Try: a place to make friends" /></label><button id="semantic-button" type="submit">Find with AI <span>→</span></button><button id="reset-button" class="text-button" type="button">Reset samples</button></form>
+      <div id="search-status" class="search-status" aria-live="polite">Type normally for an instant search, or use Find with AI to search by meaning.</div>
       <div id="clubs" class="club-grid"></div>
       <p id="empty-state" class="empty" hidden>No clubs match that search yet.</p>
     </section>

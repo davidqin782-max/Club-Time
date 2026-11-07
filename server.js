@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { organizeClub } = require('./ai');
+const { organizeClub, findSimilarClubs } = require('./ai');
 
 const PORT = 3000;
 const publicDir = __dirname;
@@ -31,6 +31,18 @@ const server = http.createServer(async (request, response) => {
     } catch (error) {
       console.error('AI request failed:', error.message);
       return send(response, 502, { error: 'I could not organize that club right now. Please check the key and your internet connection, then try again.' });
+    }
+  }
+
+  if (request.method === 'POST' && request.url === '/api/search') {
+    try {
+      const { query, clubs } = await readBody(request);
+      if (!query || query.trim().length < 2 || !Array.isArray(clubs)) return send(response, 400, { error: 'Please enter an interest to search for.' });
+      const matches = await findSimilarClubs(query.trim(), clubs);
+      return send(response, 200, matches);
+    } catch (error) {
+      console.error('AI search failed:', error.message);
+      return send(response, 502, { error: 'I could not run the AI search right now. Please check the key and your internet connection, then try again.' });
     }
   }
 
