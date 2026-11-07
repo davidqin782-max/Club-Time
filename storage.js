@@ -23,4 +23,10 @@ function addClub(club) {
   return savedClub;
 }
 
+function deleteClub(id) {
+  const remaining = loadClubs().filter(club => club.id !== id);
+  saveClubs(remaining);
+  return remaining;
+}
+
 function resetClubs() { saveClubs(starterClubs); return starterClubs; }

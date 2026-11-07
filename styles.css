@@ -22,4 +22,15 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 .meeting-details { display:grid; grid-template-columns:1fr 1fr; gap:12px; border-top:1px solid var(--line); padding-top:16px; margin-top:20px; }
 .meeting-details div { display:flex; flex-direction:column; gap:4px; }
 .meeting-details strong { font-size:13px; font-weight:500; }
+.card-actions { display:flex; align-items:center; gap:8px; }
+.delete-button,.danger-button { border:0; border-radius:8px; padding:7px 10px; font:700 12px 'DM Sans'; cursor:pointer; }
+.delete-button { background:transparent; color:#a4493d; }
+.delete-button:hover { background:#fff0ec; }
+.modal-backdrop { position:fixed; inset:0; z-index:10; display:grid; place-items:center; padding:20px; background:#19302b99; }
+.modal-backdrop[hidden] { display:none; }
+.confirm-modal { width:min(430px,100%); padding:30px; border-radius:20px; background:white; box-shadow:0 20px 70px #19302b55; }
+.confirm-modal h2 { font-size:32px; }
+.confirm-modal p { color:var(--muted); line-height:1.5; }
+.confirm-actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-top:24px; }
+.danger-button { background:#a4493d; color:white; }
 @media (max-width:700px) { .topbar,main { padding-left:20px; padding-right:20px; } .topbar { padding-top:20px; } .tagline { display:none; } .hero { padding:48px 0 62px; } .panel { padding:24px; } .form-footer,.section-heading { align-items:flex-start; flex-direction:column; } .form-footer { gap:18px; } .club-grid { grid-template-columns:1fr; } .search-row { align-items:stretch; flex-direction:column; } }
