@@ -19,6 +19,8 @@ const confirmTitle = document.querySelector('#confirm-title');
 const confirmCopy = document.querySelector('#confirm-copy');
 const cancelDelete = document.querySelector('#cancel-delete');
 const confirmDelete = document.querySelector('#confirm-delete');
+const safetyModal = document.querySelector('#safety-modal');
+const closeSafety = document.querySelector('#close-safety');
 let clubs = loadClubs();
 let aiMatches = null;
 let pendingDeleteId = null;
@@ -58,7 +60,10 @@ form.addEventListener('submit', async event => {
   try {
     const response = await fetch('/api/organize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ description: text }) });
     const club = await response.json();
-    if (!response.ok) throw new Error(club.error || 'Something went wrong.');
+    if (!response.ok) {
+      if (club.blocked) { safetyModal.hidden = false; return; }
+      throw new Error(club.error || 'Something went wrong.');
+    }
     clubs = [addClub(club), ...clubs]; renderClubs(); form.reset(); status.className = 'status success'; status.textContent = 'Published! Your club is now easier to compare and find.';
     document.querySelector('.clubs-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (error) { status.className = 'status error'; status.textContent = error.message; }
@@ -76,6 +81,7 @@ clubsElement.addEventListener('click', event => {
 });
 
 cancelDelete.addEventListener('click', () => { pendingDeleteId = null; deleteModal.hidden = true; });
+closeSafety.addEventListener('click', () => { safetyModal.hidden = true; description.focus(); });
 confirmDelete.addEventListener('click', () => {
   if (confirmDelete.textContent === 'Yes, continue') {
     confirmTitle.textContent = 'Are you for real?';

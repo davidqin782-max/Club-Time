@@ -27,7 +27,7 @@ const server = http.createServer(async (request, response) => {
       const { description } = await readBody(request);
       if (!description || description.trim().length < 10) return send(response, 400, { error: 'Please add a little more detail about the club.' });
       const club = await organizeClub(description.trim());
-      if (club.blocked) return send(response, 400, { error: 'This club cannot be published because it needs a school adult to review it.' });
+      if (club.blocked) return send(response, 400, { blocked: true, error: 'This club cannot be published because it asks to ignore school rules or claim approval.' });
       return send(response, 200, club);
     } catch (error) {
       console.error('AI request failed:', error.message);

@@ -29,6 +29,7 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 .modal-backdrop { position:fixed; inset:0; z-index:10; display:grid; place-items:center; padding:20px; background:#19302b99; }
 .modal-backdrop[hidden] { display:none; }
 .confirm-modal { width:min(430px,100%); padding:30px; border-radius:20px; background:white; box-shadow:0 20px 70px #19302b55; }
+.safety-modal { border-top:5px solid #a4493d; }
 .confirm-modal h2 { font-size:32px; }
 .confirm-modal p { color:var(--muted); line-height:1.5; }
 .confirm-actions { display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-top:24px; }
