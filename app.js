@@ -29,6 +29,7 @@ function renderClubs() {
     <article class="club-card">
       <div class="card-top"><span class="club-badge">${escapeHtml((club.name || 'C').slice(0, 1))}</span><span class="unverified">${club.unverified ? 'Unverified' : 'Sample'}</span></div>
       <h3>${escapeHtml(club.name)}</h3><p class="summary">${escapeHtml(club.summary)}</p>
+      ${club.originalDescription ? `<div class="original-description"><span>Publisher wrote</span><p>${escapeHtml(club.originalDescription)}</p></div>` : ''}
       <div class="fit"><span>Good for</span><strong>${escapeHtml(club.whoItsFor)}</strong></div>
       <div class="activities"><span>Try</span><div>${(club.activities || []).map(item => `<span class="pill">${escapeHtml(item)}</span>`).join('')}</div></div>
       <div class="meeting">◷ ${escapeHtml(club.meetingInfo || 'Meeting details should be confirmed with the school.')}</div>
