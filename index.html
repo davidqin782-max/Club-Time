@@ -18,10 +18,16 @@
 
     <section class="organizer panel" id="publish">
       <div class="section-heading"><div><div class="eyebrow">One-time AI organizer</div><h2>Publish a club</h2></div><span class="step">01 / 01</span></div>
-      <p class="muted">Paste or write the club details. The AI will make them easier to understand and search.</p>
+      <p class="muted">Fill in each box so students can understand exactly what the club offers.</p>
       <form id="club-form">
-        <label for="description">What is this club about?</label>
-        <textarea id="description" rows="5" placeholder="Example: A lunchtime club where students learn photography, take pictures around school, and share tips. Beginners are welcome. We meet on Tuesdays in room 12."></textarea>
+        <div class="field-grid">
+          <div class="field full"><label for="club-name">Club name</label><input id="club-name" required placeholder="Example: Creative Makers" /></div>
+          <div class="field full"><label for="description">What is this club about?</label><textarea id="description" rows="4" required minlength="10" placeholder="Example: We make art, posters, and crafts. Beginners are welcome."></textarea></div>
+          <div class="field"><label for="time-of-day">Time of day</label><input id="time-of-day" required placeholder="Example: After school" /></div>
+          <div class="field"><label for="days">Day(s) of the week</label><input id="days" required placeholder="Example: Tuesdays" /></div>
+          <div class="field"><label for="duration">How long does it last?</label><input id="duration" required placeholder="Example: 45 minutes" /></div>
+          <div class="field"><label for="classroom">Classroom</label><input id="classroom" required placeholder="Example: Room 12" /></div>
+        </div>
         <div class="form-footer"><span class="privacy-note">Your key stays on this computer's server.</span><button id="publish-button" type="submit">Organize & publish <span>→</span></button></div>
       </form>
       <div id="status" class="status" aria-live="polite"></div>

@@ -1,5 +1,10 @@
 const form = document.querySelector('#club-form');
+const clubName = document.querySelector('#club-name');
 const description = document.querySelector('#description');
+const timeOfDay = document.querySelector('#time-of-day');
+const days = document.querySelector('#days');
+const duration = document.querySelector('#duration');
+const classroom = document.querySelector('#classroom');
 const publishButton = document.querySelector('#publish-button');
 const status = document.querySelector('#status');
 const search = document.querySelector('#search');
@@ -40,8 +45,8 @@ function renderClubs() {
 
 form.addEventListener('submit', async event => {
   event.preventDefault();
-  const text = description.value.trim();
-  if (text.length < 10) { status.className = 'status error'; status.textContent = 'Add a little more detail so the organizer can help.'; return; }
+  if (!form.checkValidity()) { form.reportValidity(); status.className = 'status error'; status.textContent = 'Please fill in every box before publishing.'; return; }
+  const text = `Club name: ${clubName.value.trim()}\nDescription: ${description.value.trim()}\nTime of day: ${timeOfDay.value.trim()}\nDay(s): ${days.value.trim()}\nDuration: ${duration.value.trim()}\nClassroom: ${classroom.value.trim()}`;
   publishButton.disabled = true; status.className = 'status thinking'; status.textContent = 'Thinking…';
   try {
     const response = await fetch('/api/organize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ description: text }) });
