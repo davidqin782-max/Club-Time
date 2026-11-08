@@ -7,16 +7,16 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="#top"><span class="brand-mark">✦</span> Club Time</a><span class="tagline">Find a club that fits you.</span></header>
+  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><span class="brand-mark">✦</span> Club Time</a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find">Find Clubs</a><a href="#publish" data-page-link="publish">Publish a Club</a><a href="#safety" data-page-link="safety">Safety & About</a></nav></header>
   <main id="top">
-    <section class="hero">
+    <section class="hero page-section" data-page-section="find">
       <div class="eyebrow">School & learning</div>
       <h1>Less scrolling.<br /><span>More belonging.</span></h1>
       <p class="hero-copy">Club Time turns a club description into a clear, friendly card so students can spot what might actually fit them.</p>
-      <a class="jump" href="#publish">Try the AI organizer <span>↓</span></a>
+      <a class="jump" href="#publish" data-page-link="publish">Try the AI organizer <span>↓</span></a>
     </section>
 
-    <section class="organizer panel" id="publish">
+    <section class="organizer panel page-section" id="publish" data-page-section="publish">
       <div class="section-heading"><div><div class="eyebrow">One-time AI organizer</div><h2>Publish a club</h2></div><span class="step">01 / 01</span></div>
       <p class="muted">Fill in each box so students can understand exactly what the club offers.</p>
       <form id="club-form">
@@ -33,7 +33,7 @@
       <div id="status" class="status" aria-live="polite"></div>
     </section>
 
-    <section class="clubs-section">
+    <section class="clubs-section page-section" data-page-section="find">
       <div class="section-heading"><div><div class="eyebrow">The difference</div><h2>Clubs, made clearer.</h2></div><span id="club-count" class="count"></span></div>
       <form id="search-form" class="search-row"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Try: a place to make friends" /></label><button id="semantic-button" type="submit">Find with AI <span>→</span></button><button id="reset-button" class="text-button" type="button">Reset samples</button></form>
       <div id="search-status" class="search-status" aria-live="polite">Type normally for an instant search, or use Find with AI to search by meaning.</div>
@@ -41,7 +41,7 @@
       <p id="empty-state" class="empty" hidden>No clubs match that search yet.</p>
     </section>
 
-    <section class="safety"><span class="safety-icon">✓</span><div><strong>Safety check</strong><p>Every club is marked <em>unverified</em> until a student or school adult checks its details. School rules come first.</p></div></section>
+    <section class="safety page-section" id="safety" data-page-section="safety"><div class="about-copy"><div class="eyebrow">About Club Time</div><h2>Find a club that fits.</h2><p>Club Time helps students compare clubs by turning publisher details into clear, friendly cards. The AI organizes the information, but school rules and adult review come first.</p></div><div class="safety-check"><span class="safety-icon">✓</span><div><strong>Safety check</strong><p>Every new club waits for school-adult approval before students should rely on its details.</p></div></div></section>
   </main>
   <div id="delete-modal" class="modal-backdrop" hidden><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><div class="eyebrow">Delete club</div><h2 id="confirm-title">Are you sure?</h2><p id="confirm-copy">This will remove the club from this computer's saved list.</p><div class="confirm-actions"><button id="cancel-delete" class="text-button" type="button">Keep club</button><button id="confirm-delete" class="danger-button" type="button">Yes, delete it</button></div></section></div>
   <div id="safety-modal" class="modal-backdrop" hidden><section class="confirm-modal safety-modal" role="dialog" aria-modal="true" aria-labelledby="safety-title"><div class="eyebrow">School safety check</div><h2 id="safety-title">This club was stopped.</h2><p>The description asked Club Time to ignore school rules or claim official approval. A publisher cannot approve a club just by writing it in the description.</p><p>Please edit the club so it contains honest details for a school adult to review.</p><div class="confirm-actions"><button id="close-safety" class="danger-button" type="button">Go back and edit</button></div></section></div>

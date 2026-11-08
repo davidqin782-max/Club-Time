@@ -21,9 +21,17 @@ const cancelDelete = document.querySelector('#cancel-delete');
 const confirmDelete = document.querySelector('#confirm-delete');
 const safetyModal = document.querySelector('#safety-modal');
 const closeSafety = document.querySelector('#close-safety');
+const pageSections = document.querySelectorAll('[data-page-section]');
+const pageLinks = document.querySelectorAll('[data-page-link]');
 let clubs = loadClubs();
 let aiMatches = null;
 let pendingDeleteId = null;
+
+function setPage(page) {
+  pageSections.forEach(section => { section.hidden = section.dataset.pageSection !== page; });
+  pageLinks.forEach(link => { link.classList.toggle('active', link.dataset.pageLink === page); });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[character]));
@@ -64,7 +72,7 @@ form.addEventListener('submit', async event => {
       if (club.blocked) { safetyModal.hidden = false; return; }
       throw new Error(club.error || 'Something went wrong.');
     }
-    clubs = [addClub(club), ...clubs]; renderClubs(); form.reset(); status.className = 'status success'; status.textContent = 'Published! Your club is now easier to compare and find.';
+    clubs = [addClub(club), ...clubs]; renderClubs(); form.reset(); status.className = 'status success'; status.textContent = 'Published! Your club is now awaiting adult approval.'; setPage('find');
     document.querySelector('.clubs-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (error) { status.className = 'status error'; status.textContent = error.message; }
   finally { publishButton.disabled = false; }
@@ -82,6 +90,7 @@ clubsElement.addEventListener('click', event => {
 
 cancelDelete.addEventListener('click', () => { pendingDeleteId = null; deleteModal.hidden = true; });
 closeSafety.addEventListener('click', () => { safetyModal.hidden = true; description.focus(); });
+pageLinks.forEach(link => link.addEventListener('click', event => { event.preventDefault(); setPage(link.dataset.pageLink); history.replaceState(null, '', `#${link.dataset.pageLink}`); }));
 confirmDelete.addEventListener('click', () => {
   if (confirmDelete.textContent === 'Yes, continue') {
     confirmTitle.textContent = 'Are you for real?';
@@ -107,4 +116,5 @@ searchForm.addEventListener('submit', async event => {
   finally { semanticButton.disabled = false; semanticButton.innerHTML = 'Find with AI <span>→</span>'; }
 });
 document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; });
+setPage(location.hash === '#publish' ? 'publish' : location.hash === '#safety' ? 'safety' : 'find');
 renderClubs();
