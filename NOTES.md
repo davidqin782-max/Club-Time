@@ -19,6 +19,7 @@
 - New publisher clubs now start as “Awaiting adult approval” and are clearly marked until a school adult reviews them.
 - Unsafe requests that try to ignore school rules now show a clear popup explaining what to fix.
 - The layout now has three top navigation pages: Find Clubs, Publish a Club, and Safety & About.
+- Page changes now animate down and out, then up and in, with reduced-motion support.
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
 - Saves on this computer only for now.

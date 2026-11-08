@@ -26,11 +26,28 @@ const pageLinks = document.querySelectorAll('[data-page-link]');
 let clubs = loadClubs();
 let aiMatches = null;
 let pendingDeleteId = null;
+let activePage = null;
+let pageTransitionTimer = null;
 
 function setPage(page) {
-  pageSections.forEach(section => { section.hidden = section.dataset.pageSection !== page; });
   pageLinks.forEach(link => { link.classList.toggle('active', link.dataset.pageLink === page); });
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (activePage === page) return;
+  const nextSections = [...pageSections].filter(section => section.dataset.pageSection === page);
+  if (activePage === null) {
+    pageSections.forEach(section => { section.hidden = section.dataset.pageSection !== page; });
+    activePage = page;
+    return;
+  }
+  const currentSections = [...pageSections].filter(section => !section.hidden);
+  currentSections.forEach(section => section.classList.add('page-exit-down'));
+  clearTimeout(pageTransitionTimer);
+  pageTransitionTimer = setTimeout(() => {
+    currentSections.forEach(section => { section.hidden = true; section.classList.remove('page-exit-down'); });
+    nextSections.forEach(section => { section.hidden = false; section.classList.add('page-enter-up'); });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    pageTransitionTimer = setTimeout(() => nextSections.forEach(section => section.classList.remove('page-enter-up')), 420);
+  }, 240);
+  activePage = page;
 }
 
 function escapeHtml(value = '') {
@@ -73,7 +90,7 @@ form.addEventListener('submit', async event => {
       throw new Error(club.error || 'Something went wrong.');
     }
     clubs = [addClub(club), ...clubs]; renderClubs(); form.reset(); status.className = 'status success'; status.textContent = 'Published! Your club is now awaiting adult approval.'; setPage('find');
-    document.querySelector('.clubs-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => document.querySelector('.clubs-section').scrollIntoView({ behavior: 'smooth', block: 'start' }), 260);
   } catch (error) { status.className = 'status error'; status.textContent = error.message; }
   finally { publishButton.disabled = false; }
 });
