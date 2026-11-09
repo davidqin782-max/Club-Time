@@ -5,7 +5,7 @@ const { organizeClub, findSimilarClubs } = require('./ai');
 
 const PORT = 3000;
 const publicDir = __dirname;
-const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.md': 'text/markdown' };
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.md': 'text/markdown', '.png': 'image/png' };
 
 function send(response, status, body, type = 'application/json') {
   response.writeHead(status, { 'Content-Type': `${type}; charset=utf-8` });
