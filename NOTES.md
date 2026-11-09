@@ -23,6 +23,7 @@
 - Removed the old Publish and Safety page entrance animations while keeping their visual styling and the shared page transition.
 - Removed the old Find Clubs entrance animations while keeping its visual styling and the shared page transition.
 - Changed the main Find Clubs headline to use the Redaction 50 font.
+- Simplified the visible wording and set titles to Redaction 20 with explanation text in Redaction 50.
 - Find Clubs is grouped into one page container so its transition plays only once.
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
