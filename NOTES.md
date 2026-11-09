@@ -25,6 +25,7 @@
 - Changed the main Find Clubs headline to use the Redaction 50 font.
 - Simplified the visible wording and set titles to Redaction 20 with explanation text in Redaction 50.
 - Applied the font rule across the app: bigger text uses Redaction 20 and smaller text uses Redaction 50.
+- Added the Club Time image as the browser tab icon.
 - Find Clubs is grouped into one page container so its transition plays only once.
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
