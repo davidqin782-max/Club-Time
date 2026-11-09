@@ -21,6 +21,7 @@
 - The layout now has three top navigation pages: Find Clubs, Publish a Club, and Safety & About.
 - Page changes now animate down and out, then up and in, with reduced-motion support.
 - Removed the old Publish and Safety page entrance animations while keeping their visual styling and the shared page transition.
+- Removed the old Find Clubs entrance animations while keeping its visual styling and the shared page transition.
 - Find Clubs is grouped into one page container so its transition plays only once.
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
