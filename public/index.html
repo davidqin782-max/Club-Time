@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Club Time</title>
+  <link rel="icon" type="image/png" href="/club-time-icon-white.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><span class="brand-mark">✦</span> Club Time</a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find">Find Clubs</a><a href="#publish" data-page-link="publish">Publish a Club</a><a href="#safety" data-page-link="safety">Safety & About</a></nav></header>
+  <main id="top">
+    <div id="page-find" class="page-section" data-page-section="find">
+    <section class="hero">
+      <div class="eyebrow">School & learning</div>
+      <h1>Find a club<br /><span>that fits you.</span></h1>
+      <p class="hero-copy">Club Time turns club details into a simple card, so you can find clubs that match your interests.</p>
+      <a class="jump" href="#publish" data-page-link="publish">Share a club <span>↓</span></a>
+    </section>
+
+    <section class="clubs-section">
+      <div class="section-heading"><div><div class="eyebrow">Find your match</div><h2>Find a club that fits.</h2></div><span id="club-count" class="count"></span></div>
+      <form id="search-form" class="search-row"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Try: a club for making things" /></label><button id="semantic-button" type="submit">Find with AI <span>→</span></button><button id="reset-button" class="text-button" type="button">Reset samples</button></form>
+      <div id="search-status" class="search-status" aria-live="polite">Type to search, or use Find with AI to search by meaning.</div>
+      <div id="clubs" class="club-grid"></div>
+      <p id="empty-state" class="empty" hidden>No clubs match yet.</p>
+    </section>
+    </div>
+
+    <section class="organizer panel page-section" id="publish" data-page-section="publish">
+      <div class="section-heading"><div><div class="eyebrow">Use AI once</div><h2>Share a club</h2></div><span class="step">01 / 01</span></div>
+      <p class="muted">Add the details below. We will make a clear club card for students.</p>
+      <form id="club-form">
+        <div class="field-grid">
+          <div class="field full"><label for="club-name">Club name</label><input id="club-name" required placeholder="Example: Creative Makers" /></div>
+          <div class="field full"><label for="description">What do students do in this club?</label><textarea id="description" rows="4" required minlength="10" placeholder="Example: We make art, posters, and crafts. Beginners are welcome."></textarea></div>
+          <div class="field"><label for="time-of-day">Time of day</label><input id="time-of-day" required placeholder="Example: After school" /></div>
+          <div class="field"><label for="days">Day(s) of the week</label><input id="days" required placeholder="Example: Tuesdays" /></div>
+          <div class="field"><label for="duration">How long does it last?</label><input id="duration" required placeholder="Example: 45 minutes" /></div>
+          <div class="field"><label for="classroom">Classroom</label><input id="classroom" required placeholder="Example: Room 12" /></div>
+        </div>
+        <div class="form-footer"><span class="privacy-note">Your key stays on this computer.</span><button id="publish-button" type="submit">Make club card <span>→</span></button></div>
+      </form>
+      <div id="status" class="status" aria-live="polite"></div>
+    </section>
+
+    <section class="safety page-section" id="safety" data-page-section="safety"><div class="about-copy"><div class="eyebrow">About Club Time</div><h2>Find a club that fits.</h2><p>Club Time turns club details into simple cards. The AI helps organize information, but school rules and adult review come first.</p></div><div class="safety-check"><span class="safety-icon">✓</span><div><strong>Adult review</strong><p>New clubs wait for a school adult to review them before students rely on them.</p></div></div></section>
+  </main>
+  <div id="delete-modal" class="modal-backdrop" hidden><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><div class="eyebrow">Delete club</div><h2 id="confirm-title">Are you sure?</h2><p id="confirm-copy">This will remove the club from this computer's saved list.</p><div class="confirm-actions"><button id="cancel-delete" class="text-button" type="button">Keep club</button><button id="confirm-delete" class="danger-button" type="button">Yes, delete it</button></div></section></div>
+  <div id="safety-modal" class="modal-backdrop" hidden><section class="confirm-modal safety-modal" role="dialog" aria-modal="true" aria-labelledby="safety-title"><div class="eyebrow">School safety check</div><h2 id="safety-title">This club was stopped.</h2><p>The description asked Club Time to ignore school rules or claim official approval. A publisher cannot approve a club just by writing it in the description.</p><p>Please edit the club so it contains honest details for a school adult to review.</p><div class="confirm-actions"><button id="close-safety" class="danger-button" type="button">Go back and edit</button></div></section></div>
+  <footer>Club Time · a student project for helping people find a better fit.</footer>
+  <script src="storage.js"></script><script src="app.js"></script>
+</body>
+</html>

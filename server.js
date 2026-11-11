@@ -4,7 +4,7 @@ const path = require('path');
 const { handleApiRequest } = require('./api-handler');
 
 const PORT = Number(process.env.PORT) || 3000;
-const publicDir = __dirname;
+const publicDir = path.join(__dirname, 'public');
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.md': 'text/markdown', '.png': 'image/png' };
 
 function send(response, status, body, type = 'application/json') {
