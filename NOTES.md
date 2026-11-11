@@ -37,6 +37,7 @@
 - Vercel setup: connect this GitHub repository, keep the project root as the root directory, and leave the build command blank. Vercel serves the page files and the `api/organize.js` and `api/search.js` server functions automatically.
 - Vercel environment setting: add `OPENAI_API_KEY` with the real key for Production, Preview, and Development as needed. Do not commit or upload `.env`.
 - The local page loaded successfully during the Vercel check. The AI check returned 401, which means OpenAI rejected the current local key; replace it before expecting AI answers online.
+- Browser files are served from `public/` on Vercel, while the local `server.js` stays available for `npm start`.
 
 ### Maybe Later
 
