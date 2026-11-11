@@ -33,6 +33,7 @@
 - Clubs save in browser localStorage through `storage.js`, with made-up sample clubs and no real people.
 - Every submitted club is labeled unverified, with a reminder to check school details before trusting it.
 - Saves on this computer only for now.
+- After each save point, push it to GitHub.
 
 ### Maybe Later
 
