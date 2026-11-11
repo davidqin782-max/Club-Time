@@ -1,9 +1,13 @@
 {
   "cleanUrls": true,
+  "builds": [
+    { "src": "api/*.js", "use": "@vercel/node" },
+    { "src": "public/**", "use": "@vercel/static" }
+  ],
   "routes": [
     { "src": "/api/organize", "dest": "/api/organize.js" },
     { "src": "/api/search", "dest": "/api/search.js" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/", "dest": "/public/index.html" },
+    { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }
