@@ -2,7 +2,13 @@ const fs = require('fs');
 const path = require('path');
 
 function getApiKey() {
-  const env = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
+  if (process.env.OPENAI_API_KEY) return process.env.OPENAI_API_KEY.trim();
+  let env;
+  try {
+    env = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
+  } catch {
+    return '';
+  }
   const line = env.split(/\r?\n/).find(item => item.startsWith('OPENAI_API_KEY='));
   return line ? line.slice('OPENAI_API_KEY='.length).trim() : '';
 }
