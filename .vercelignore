@@ -2,3 +2,4 @@
 node_modules
 tools
 .git
+server.js
