@@ -85,6 +85,7 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .panel { border-color:#9cc8f0; box-shadow:0 16px 44px #0005; }
 .panel h2,.panel .step { color:var(--ink); }
 .club-card { box-shadow:0 10px 28px #06133818; }
+.club-card h3 { color:var(--ink); }
 .club-card:hover { box-shadow:0 16px 34px #0005; border-color:#5acbff; }
 .safety { background:#0e3370; border:1px solid #3e9bea; box-shadow:0 14px 34px #0004; }
 .safety h2,.safety strong { color:white; }
