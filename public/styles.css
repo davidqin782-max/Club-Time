@@ -94,8 +94,9 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .organizer.panel h2,.organizer.panel .step { color:white; }
 .organizer.panel .muted,.organizer.panel .privacy-note { color:#c9e9ff; }
 .organizer.panel label { color:white; }
-.organizer.panel input,.organizer.panel textarea { border-color:#8cb9e5; background:#f7fbff; }
-.organizer.panel input:focus,.organizer.panel textarea:focus { border-color:#5acbff; box-shadow:0 0 0 3px #5acbff55; }
+.organizer.panel input,.organizer.panel textarea { border-color:#5acbff; background:#17488f; color:white; }
+.organizer.panel input::placeholder,.organizer.panel textarea::placeholder { color:#c9e9ff; opacity:1; }
+.organizer.panel input:focus,.organizer.panel textarea:focus { border-color:#9ae5ff; background:#2059a6; box-shadow:0 0 0 3px #5acbff55; }
 .organizer.panel #publish-button { background:#5acbff; color:#061338; }
 .organizer.panel #publish-button:hover { background:#8cddff; }
 footer { color:#b9d8f3; }
