@@ -84,9 +84,12 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .clubs-section .section-heading h2 { color:white; }
 .panel { border-color:#9cc8f0; box-shadow:0 16px 44px #0005; }
 .panel h2,.panel .step { color:var(--ink); }
-.club-card { box-shadow:0 10px 28px #06133818; }
-.club-card h3 { color:var(--ink); }
-.club-card:hover { box-shadow:0 16px 34px #0005; border-color:#5acbff; }
+.club-card { background:#123d7f; color:white; border-color:#5acbff; box-shadow:0 10px 28px #0005; }
+.club-card h3 { color:white; }
+.club-card .summary { color:#d9efff; }
+.club-card .fit { border-color:#5aaef0; }
+.club-card .fit strong,.club-card .meeting { color:#d9efff; }
+.club-card:hover { background:#174990; box-shadow:0 16px 34px #0007; border-color:#9ae5ff; }
 .safety { background:#0e3370; border:1px solid #3e9bea; box-shadow:0 14px 34px #0004; }
 .safety h2,.safety strong { color:white; }
 .safety p,.about-copy p { color:#c9e9ff; }
