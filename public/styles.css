@@ -66,3 +66,28 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 @media (max-width:700px) { .topbar { align-items:flex-start; flex-direction:column; } .top-nav { width:100%; overflow-x:auto; } .top-nav a { white-space:nowrap; } }
 p, .search-status, .privacy-note, .count, .step { font-family:'Redaction 50',serif; }
 .safety-check strong { font-family:'Redaction 20',serif; }
+
+/* Club Time brand theme: deep navy, electric blue, and icy highlights. */
+:root { --ink:#07143d; --green:#2478e8; --mint:#dff4ff; --cream:#07133a; --peach:#5acbff; --line:#c4d8f2; --muted:#5b6d89; }
+body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030923 100%); color:white; }
+.topbar { color:white; }
+.brand { display:inline-flex; align-items:center; gap:10px; color:white; }
+.brand-logo { width:46px; height:46px; object-fit:cover; border-radius:12px; box-shadow:0 0 0 2px #55c9ff88, 0 8px 22px #0008; transition:transform .25s ease, box-shadow .25s ease; }
+.brand:hover .brand-logo { transform:rotate(-4deg) scale(1.06); box-shadow:0 0 0 3px #55c9ff, 0 10px 26px #0009; }
+.top-nav a { color:#c9e9ff; }
+.top-nav a:hover,.top-nav a.active { color:#061338; background:#5acbff; }
+.hero h1 { color:white; text-shadow:0 5px 24px #0006; }
+.hero h1 span { color:#5acbff; }
+.hero-copy { color:#c9e9ff; }
+.eyebrow { color:#5acbff; }
+.jump { color:white; border-color:#5acbff; }
+.clubs-section .section-heading h2 { color:white; }
+.panel { border-color:#9cc8f0; box-shadow:0 16px 44px #0005; }
+.panel h2,.panel .step { color:var(--ink); }
+.club-card { box-shadow:0 10px 28px #06133818; }
+.club-card:hover { box-shadow:0 16px 34px #0005; border-color:#5acbff; }
+.safety { background:#0e3370; border:1px solid #3e9bea; box-shadow:0 14px 34px #0004; }
+.safety h2,.safety strong { color:white; }
+.safety p,.about-copy p { color:#c9e9ff; }
+.safety-check { background:#16468d; }
+footer { color:#b9d8f3; }
