@@ -90,4 +90,12 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .safety h2,.safety strong { color:white; }
 .safety p,.about-copy p { color:#c9e9ff; }
 .safety-check { background:#16468d; }
+.organizer.panel { background:#0e3370; border-color:#3e9bea; box-shadow:0 14px 34px #0004; }
+.organizer.panel h2,.organizer.panel .step { color:white; }
+.organizer.panel .muted,.organizer.panel .privacy-note { color:#c9e9ff; }
+.organizer.panel label { color:white; }
+.organizer.panel input,.organizer.panel textarea { border-color:#8cb9e5; background:#f7fbff; }
+.organizer.panel input:focus,.organizer.panel textarea:focus { border-color:#5acbff; box-shadow:0 0 0 3px #5acbff55; }
+.organizer.panel #publish-button { background:#5acbff; color:#061338; }
+.organizer.panel #publish-button:hover { background:#8cddff; }
 footer { color:#b9d8f3; }
