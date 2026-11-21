@@ -16,6 +16,9 @@
 - Normal search understands partial words, so searching `create` finds “Creative Makers” immediately.
 - If the AI search service is temporarily unavailable, Club Time shows local matches instead of an empty result, with a clear status message.
 - Verified search in the browser: typing `create` returns Creative Makers, and the AI-unavailable fallback keeps that local match visible.
+- Club Time now remembers recent searches and matched club IDs in this browser only, then offers AI recommendations from the available Club Time clubs.
+- Recommendations use school locations only when publishers provided them; the app does not browse the wider internet or use home addresses. If AI is unavailable, local matches are shown.
+- Verified in the browser: searching `art` saved the interest, and “Recommend for me” showed Creative Makers through the safe local fallback when the AI service was unavailable.
 - Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
 - Publisher-created clubs can now be deleted through two confirmations: “Are you sure?” and “Are you for real?”
 - Added gentle entrance, hover, focus, card, button, search, modal, and safety animations with reduced-motion support.

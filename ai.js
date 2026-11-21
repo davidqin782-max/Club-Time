@@ -70,4 +70,15 @@ async function findSimilarClubs(query, clubs) {
   return { ids: Array.isArray(result.ids) ? result.ids.filter(id => allowed.has(id)) : [] };
 }
 
-module.exports = { organizeClub, findSimilarClubs };
+async function recommendClubs(profile, clubs) {
+  const catalog = clubs.map(club => ({ id: club.id, name: club.name, summary: club.summary, whoItsFor: club.whoItsFor, tags: club.tags, school: club.school || 'Not provided', address: club.address || 'Not provided' })).slice(0, 50);
+  const text = await requestCompletion([
+        { role: 'system', content: `${getBrief()}\n${SAFETY_INSTRUCTIONS}\nRecommend only from the provided club catalog. Use the saved interests, previously searched club IDs, and school location fields as signals. Do not claim exact distance, live online availability, or school approval. Return only valid JSON with this key: ids (an array of the best matching club IDs, no more than 5).` },
+        { role: 'user', content: `Choose clubs for this student's saved interests. Interests: ${JSON.stringify(profile.interests)}\nPreviously searched club IDs: ${JSON.stringify(profile.searchedClubIds)}\nClub catalog with school locations: ${JSON.stringify(catalog)}` }
+      ]);
+  const result = parseJson(text);
+  const allowed = new Set(catalog.map(club => club.id));
+  return { ids: Array.isArray(result.ids) ? result.ids.filter(id => allowed.has(id)).slice(0, 5) : [] };
+}
+
+module.exports = { organizeClub, findSimilarClubs, recommendClubs };

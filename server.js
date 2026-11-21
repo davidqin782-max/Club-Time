@@ -13,8 +13,8 @@ function send(response, status, body, type = 'application/json') {
 }
 
 const server = http.createServer(async (request, response) => {
-  if (request.method === 'POST' && (request.url === '/api/organize' || request.url === '/api/search')) {
-    return handleApiRequest(request, response, request.url.endsWith('/search') ? 'search' : 'organize');
+  if (request.method === 'POST' && ['/api/organize', '/api/search', '/api/recommend'].includes(request.url)) {
+    return handleApiRequest(request, response, request.url.slice(5));
   }
 
   const requested = request.url === '/' ? '/index.html' : request.url;

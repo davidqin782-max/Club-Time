@@ -1,4 +1,4 @@
-const { organizeClub, findSimilarClubs } = require('./ai');
+const { organizeClub, findSimilarClubs, recommendClubs } = require('./ai');
 
 function send(response, status, body) {
   response.statusCode = status;
@@ -60,6 +60,15 @@ async function handleApiRequest(request, response, route) {
       const { query, clubs } = body;
       if (!query || query.trim().length < 2 || !Array.isArray(clubs)) return send(response, 400, { error: 'Please enter an interest to search for.' });
       return send(response, 200, await findSimilarClubs(query.trim(), clubs));
+    }
+
+    if (route === 'recommend') {
+      const { interests, searchedClubIds, clubs } = body;
+      if (!Array.isArray(interests) || !interests.length || !Array.isArray(clubs)) return send(response, 400, { error: 'Search for a few interests before asking for recommendations.' });
+      const safeInterests = interests.filter(item => typeof item === 'string').map(item => item.trim().slice(0, 80)).filter(Boolean).slice(0, 12);
+      const safeIds = Array.isArray(searchedClubIds) ? searchedClubIds.filter(id => typeof id === 'string').slice(0, 20) : [];
+      const safeClubs = clubs.slice(0, 50).filter(club => club && typeof club.id === 'string').map(club => ({ id: club.id, name: String(club.name || '').slice(0, 120), summary: String(club.summary || '').slice(0, 500), whoItsFor: String(club.whoItsFor || '').slice(0, 300), tags: Array.isArray(club.tags) ? club.tags.slice(0, 12) : [], school: String(club.school || '').slice(0, 120), address: String(club.address || '').slice(0, 160) }));
+      return send(response, 200, await recommendClubs({ interests: safeInterests, searchedClubIds: safeIds }, safeClubs));
     }
 
     return send(response, 404, { error: 'Not found' });

@@ -16,6 +16,8 @@ const emptyState = document.querySelector('#empty-state');
 const searchForm = document.querySelector('#search-form');
 const semanticButton = document.querySelector('#semantic-button');
 const searchStatus = document.querySelector('#search-status');
+const recommendButton = document.querySelector('#recommend-button');
+const recommendationStatus = document.querySelector('#recommendation-status');
 const deleteModal = document.querySelector('#delete-modal');
 const confirmTitle = document.querySelector('#confirm-title');
 const confirmCopy = document.querySelector('#confirm-copy');
@@ -30,6 +32,16 @@ let aiMatches = null;
 let pendingDeleteId = null;
 let activePage = null;
 let pageTransitionTimer = null;
+
+function clubCatalog() {
+  return clubs.map(club => ({ id: club.id, name: club.name, summary: club.summary, whoItsFor: club.whoItsFor, tags: club.tags, school: club.school, address: club.address }));
+}
+
+function localRecommendations(profile) {
+  const interestText = profile.interests.join(' ');
+  return clubs.map(club => ({ club, score: (matchesSearch(club, interestText) ? 3 : 0) + (profile.searchedClubIds.includes(club.id) ? 2 : 0) }))
+    .filter(item => item.score > 0).sort((a, b) => b.score - a.score).slice(0, 5).map(item => item.club.id);
+}
 
 function setPage(page) {
   pageLinks.forEach(link => { link.classList.toggle('active', link.dataset.pageLink === page); });
@@ -125,11 +137,18 @@ confirmDelete.addEventListener('click', () => {
   clubs = deleteClub(pendingDeleteId); aiMatches = null; deleteModal.hidden = true; pendingDeleteId = null; renderClubs(); status.className = 'status success'; status.textContent = 'The club was deleted from this computer.';
 });
 
-search.addEventListener('input', () => { aiMatches = null; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; renderClubs(); });
+search.addEventListener('input', () => {
+  aiMatches = null;
+  const query = search.value.trim();
+  if (query.length >= 2) rememberSearch(query, clubs.filter(club => matchesSearch(club, query.toLowerCase())));
+  searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.';
+  renderClubs();
+});
 searchForm.addEventListener('submit', async event => {
   event.preventDefault();
   const query = search.value.trim();
   if (query.length < 2) { searchStatus.textContent = 'Type an interest or activity first.'; return; }
+  rememberSearch(query, clubs.filter(club => matchesSearch(club, query.toLowerCase())));
   semanticButton.disabled = true; semanticButton.innerHTML = 'Thinking…'; searchStatus.textContent = 'AI is looking for similar meanings…';
   try {
     const response = await fetch('/api/search', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query, clubs }) });
@@ -144,6 +163,20 @@ searchForm.addEventListener('submit', async event => {
   }
   finally { semanticButton.disabled = false; semanticButton.innerHTML = 'Find with AI <span>→</span>'; }
 });
-document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; });
+recommendButton.addEventListener('click', async () => {
+  const profile = loadSearchProfile();
+  if (!profile.interests.length) { recommendationStatus.textContent = 'Search for a few interests first, then try recommendations.'; return; }
+  recommendButton.disabled = true; recommendButton.innerHTML = 'Thinking…'; recommendationStatus.textContent = 'AI is choosing clubs from your search history…';
+  try {
+    const response = await fetch('/api/recommend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ interests: profile.interests, searchedClubIds: profile.searchedClubIds, clubs: clubCatalog() }) });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error?.message || result.error || 'Recommendations are unavailable.');
+    aiMatches = result.ids; renderClubs(); recommendationStatus.textContent = aiMatches.length ? `Here are ${aiMatches.length} clubs that may fit your interests.` : 'No close club matches yet.';
+  } catch (error) {
+    aiMatches = localRecommendations(profile); renderClubs();
+    recommendationStatus.textContent = aiMatches.length ? 'AI is unavailable, so these local matches are shown.' : error.message;
+  } finally { recommendButton.disabled = false; recommendButton.innerHTML = 'Recommend for me <span>→</span>'; }
+});
+document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; recommendationStatus.textContent = ''; });
 setPage(location.hash === '#publish' ? 'publish' : location.hash === '#safety' ? 'safety' : 'find');
 renderClubs();

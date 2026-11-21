@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'club-time-clubs-v1';
+const PROFILE_KEY = 'club-time-search-profile-v1';
 
 const starterClubs = [
   { id: 'sample-art', name: 'Creative Makers', summary: 'A welcoming place to try art, crafts, and small creative projects.', conclusion: 'I am a welcoming place to try art, crafts, and small creative projects.', whoItsFor: 'Students who like making things or want to try something new.', activities: ['Mini art projects', 'Creative challenges', 'Show-and-tell'], timeOfDay: 'Not provided yet', days: 'Not provided yet', duration: 'Not provided yet', classroom: 'Not provided yet', meetingInfo: 'Meeting details should be confirmed with the school.', tags: ['art', 'creative', 'beginner'], unverified: false, approvalStatus: 'approved', sample: true },
@@ -14,6 +15,33 @@ function loadClubs() {
 
 function saveClubs(clubs) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(clubs));
+}
+
+function loadSearchProfile() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PROFILE_KEY));
+    return {
+      interests: Array.isArray(saved?.interests) ? saved.interests.slice(0, 12) : [],
+      searchedClubIds: Array.isArray(saved?.searchedClubIds) ? saved.searchedClubIds.slice(0, 20) : []
+    };
+  } catch { return { interests: [], searchedClubIds: [] }; }
+}
+
+function saveSearchProfile(profile) {
+  localStorage.setItem(PROFILE_KEY, JSON.stringify({
+    interests: profile.interests.slice(0, 12),
+    searchedClubIds: profile.searchedClubIds.slice(0, 20)
+  }));
+}
+
+function rememberSearch(query, matchedClubs = []) {
+  const cleanQuery = String(query || '').trim().toLowerCase().slice(0, 80);
+  if (cleanQuery.length < 2) return;
+  const profile = loadSearchProfile();
+  profile.interests = [cleanQuery, ...profile.interests.filter(item => item !== cleanQuery)];
+  profile.searchedClubIds = [...matchedClubs.map(club => club.id), ...profile.searchedClubIds]
+    .filter((id, index, ids) => id && ids.indexOf(id) === index);
+  saveSearchProfile(profile);
 }
 
 function addClub(club) {
