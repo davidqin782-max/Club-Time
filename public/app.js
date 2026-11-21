@@ -74,6 +74,10 @@ function renderClubs() {
       <div class="activities"><span>Try</span><div>${(club.activities || []).map(item => `<span class="pill">${escapeHtml(item)}</span>`).join('')}</div></div>
       <div class="meeting-details"><div><span>Time of day</span><strong>${escapeHtml(club.timeOfDay || 'Not provided yet')}</strong></div><div><span>Day(s)</span><strong>${escapeHtml(club.days || 'Not provided yet')}</strong></div><div><span>How long</span><strong>${escapeHtml(club.duration || 'Not provided yet')}</strong></div><div><span>Classroom</span><strong>${escapeHtml(club.classroom || 'Not provided yet')}</strong></div></div>
     </article>`).join('');
+  clubsElement.querySelectorAll('.club-card').forEach(card => {
+    card.addEventListener('pointerenter', () => card.classList.add('card-hovered'));
+    card.addEventListener('pointerleave', () => card.classList.remove('card-hovered'));
+  });
   emptyState.hidden = visible.length > 0;
 }
 
