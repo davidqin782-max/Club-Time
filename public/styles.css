@@ -16,6 +16,10 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 .original-description { margin:16px 0; padding:12px; background:#f5f8f5; border-radius:10px; }
 .original-description span { color:var(--green); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
 .original-description p { margin:6px 0 0; color:var(--ink); font-size:13px; line-height:1.45; }
+.location-details { border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:14px 0; margin:16px 0 18px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.location-details span { display:block; color:var(--green); font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin-bottom:5px; }
+.location-details strong { display:block; font-size:14px; overflow-wrap:anywhere; }
+@media (max-width:640px) { .location-details { grid-template-columns:1fr; } }
 .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 14px; }
 .field.full { grid-column:1 / -1; }
 .field input { width:100%; border:1px solid var(--line); border-radius:14px; padding:13px 16px; color:var(--ink); background:#fbfdfb; outline:none; }

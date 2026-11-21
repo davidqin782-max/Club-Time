@@ -40,6 +40,8 @@
 - Browser files are served from `public/` on Vercel, while the local `server.js` stays available for `npm start`.
 - The AI key comes from the server-only `getKey()` helper, which gets a temporary key from MindDo and refreshes it after expiration or an invalid-key response.
 - The MindDo key can use the OpenAI model `gpt-5.6-luna`.
+- Publish now requires a school and school-address field; those values stay out of the AI prompt and are escaped before display.
+- Added basic input-length and control-character checks on the server for school-location fields. This helps prevent malformed or injected content, but school approval, authentication, HTTPS, and rate limits are still needed for stronger online security.
 
 ### Maybe Later
 

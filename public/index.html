@@ -38,8 +38,10 @@
           <div class="field"><label for="days">Day(s) of the week</label><input id="days" required placeholder="Example: Tuesdays" /></div>
           <div class="field"><label for="duration">How long does it last?</label><input id="duration" required placeholder="Example: 45 minutes" /></div>
           <div class="field"><label for="classroom">Classroom</label><input id="classroom" required placeholder="Example: Room 12" /></div>
+          <div class="field"><label for="school">School</label><input id="school" required maxlength="120" autocomplete="organization" placeholder="Example: Lincoln Middle School" /></div>
+          <div class="field"><label for="address">School address</label><input id="address" required maxlength="160" autocomplete="street-address" placeholder="Example: 100 Main Street" /></div>
         </div>
-        <div class="form-footer"><span class="privacy-note">Your key stays on this computer.</span><button id="publish-button" type="submit">Make club card <span>→</span></button></div>
+        <div class="form-footer"><span class="privacy-note">Use the school address, never a home address. Your key stays on this computer.</span><button id="publish-button" type="submit">Make club card <span>→</span></button></div>
       </form>
       <div id="status" class="status" aria-live="polite"></div>
     </section>

@@ -5,6 +5,8 @@ const timeOfDay = document.querySelector('#time-of-day');
 const days = document.querySelector('#days');
 const duration = document.querySelector('#duration');
 const classroom = document.querySelector('#classroom');
+const school = document.querySelector('#school');
+const address = document.querySelector('#address');
 const publishButton = document.querySelector('#publish-button');
 const status = document.querySelector('#status');
 const search = document.querySelector('#search');
@@ -70,6 +72,7 @@ function renderClubs() {
       ${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? '<div class="approval-note">A school adult must approve this club before students should rely on its details.</div>' : ''}
       <div class="conclusion"><span>Club conclusion</span><p>${escapeHtml(club.conclusion || `I am ${club.name}: ${club.summary}`)}</p></div>
       ${club.originalDescription ? `<div class="original-description"><span>Publisher wrote</span><p>${escapeHtml(club.originalDescription)}</p></div>` : ''}
+      <div class="location-details"><div><span>School</span><strong>${escapeHtml(club.school || 'Not provided yet')}</strong></div><div><span>School address</span><strong>${escapeHtml(club.address || 'Not provided yet')}</strong></div></div>
       <div class="fit"><span>Good for</span><strong>${escapeHtml(club.whoItsFor)}</strong></div>
       <div class="activities"><span>Try</span><div>${(club.activities || []).map(item => `<span class="pill">${escapeHtml(item)}</span>`).join('')}</div></div>
       <div class="meeting-details"><div><span>Time of day</span><strong>${escapeHtml(club.timeOfDay || 'Not provided yet')}</strong></div><div><span>Day(s)</span><strong>${escapeHtml(club.days || 'Not provided yet')}</strong></div><div><span>How long</span><strong>${escapeHtml(club.duration || 'Not provided yet')}</strong></div><div><span>Classroom</span><strong>${escapeHtml(club.classroom || 'Not provided yet')}</strong></div></div>
@@ -87,7 +90,7 @@ form.addEventListener('submit', async event => {
   const text = `Club name: ${clubName.value.trim()}\nDescription: ${description.value.trim()}\nTime of day: ${timeOfDay.value.trim()}\nDay(s): ${days.value.trim()}\nDuration: ${duration.value.trim()}\nClassroom: ${classroom.value.trim()}`;
   publishButton.disabled = true; status.className = 'status thinking'; status.textContent = 'Thinking…';
   try {
-    const response = await fetch('/api/organize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ description: text }) });
+    const response = await fetch('/api/organize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ description: text, school: school.value.trim(), address: address.value.trim() }) });
     const club = await response.json();
     if (!response.ok) {
       if (club.blocked) { safetyModal.hidden = false; return; }
