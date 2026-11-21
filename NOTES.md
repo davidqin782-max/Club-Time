@@ -11,6 +11,7 @@
 - Version 1 has a simple publish flow: enter one club description, ask the AI to organize it, review the result as a club card, and search saved clubs.
 - The local server uses server-only `getKey()` to get a temporary key from MindDo and calls `gpt-5.6-luna`; the key is never sent to the page.
 - Tested the real publish flow successfully: the AI organized a made-up photography club, the page showed “Thinking…”, and the result saved locally.
+- Re-verified the full MVP flow with MindDo `getKey()` and OpenAI: a made-up photography club produced a short summary, first-person conclusion, and publisher details in the browser.
 - Added an optional “Find with AI” search action that matches the meaning of a student's words to saved club interests; normal typing search stays instant and local.
 - Normal search also understands partial words, so searching `create` finds “Creative Makers” immediately.
 - Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
