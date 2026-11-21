@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><img class="brand-logo" src="club-time-brand.png" alt="" /> <span>Club Time</span></a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find">Find Clubs</a><a href="#recommendations" data-page-link="recommendations">Recommended</a><a href="#publish" data-page-link="publish">Publish a Club</a><a href="#settings" data-page-link="settings">Settings</a><a href="#safety" data-page-link="safety">Safety & About</a></nav></header>
+  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><img class="brand-logo" src="club-time-brand.png" alt="" /> <span>Club Time</span></a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find" data-i18n="find">Find Clubs</a><a href="#recommendations" data-page-link="recommendations" data-i18n="recommended">Recommended</a><a href="#publish" data-page-link="publish" data-i18n="publish">Publish a Club</a><a href="#settings" data-page-link="settings" data-i18n="settings">Settings</a><a href="#safety" data-page-link="safety" data-i18n="safety">Safety & About</a></nav></header>
   <main id="top">
     <div id="page-find" class="page-section" data-page-section="find">
     <section class="hero">
@@ -19,9 +19,9 @@
     </section>
 
     <section class="clubs-section">
-      <div class="section-heading"><div><div class="eyebrow">Find your match</div><h2>Find a club that fits.</h2></div><span id="club-count" class="count"></span></div>
+      <div class="section-heading"><div><div class="eyebrow" data-i18n="findEyebrow">Find your match</div><h2 data-i18n="findTitle">Find a club that fits.</h2></div><span id="club-count" class="count"></span></div>
       <form id="search-form" class="search-row"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Try: a club for making things" /></label><button id="semantic-button" type="submit">Find with AI <span>→</span></button><button id="reset-button" class="text-button" type="button">Reset samples</button></form>
-      <div id="search-status" class="search-status" aria-live="polite">Type to search, or use Find with AI to search by meaning.</div>
+      <div id="search-status" class="search-status" aria-live="polite" data-i18n="searchHint">Type to search, or use Find with AI to search by meaning.</div>
       <div id="clubs" class="club-grid"></div>
       <nav id="club-pagination" class="club-pagination" aria-label="Club pages"></nav>
       <p id="empty-state" class="empty" hidden>No clubs match yet.</p>
@@ -36,7 +36,7 @@
     </section>
 
     <section class="organizer panel page-section" id="publish" data-page-section="publish">
-      <div class="section-heading"><div><div class="eyebrow">Use AI once</div><h2>Share a club</h2></div><span class="step">01 / 01</span></div>
+      <div class="section-heading"><div><div class="eyebrow" data-i18n="publishEyebrow">Use AI once</div><h2 data-i18n="publishTitle">Share a club</h2></div><span class="step">01 / 01</span></div>
       <p class="muted">Add the details below. We will make a clear club card for students.</p>
       <form id="club-form">
         <div class="field-grid">
@@ -55,18 +55,18 @@
     </section>
 
     <section class="settings panel page-section" id="settings" data-page-section="settings">
-      <div class="settings-heading"><div class="section-heading"><div><div class="eyebrow">Your profile</div><h2>Settings</h2></div><span class="step">Saved locally</span></div><img class="settings-bird" src="bird-settings.png" alt="Pink bird illustration" /><div class="profile-picture-slot"><span class="profile-picture-label">Profile picture</span><img id="profile-picture-preview" class="profile-picture-preview" alt="Your profile picture preview" /><label class="file-button" for="profile-picture">Choose picture</label><input id="profile-picture" type="file" form="settings-form" accept="image/png,image/jpeg,image/webp" /><small>PNG, JPG, or WEBP up to 500 KB.</small></div><img class="settings-unicorn" src="unicorn-settings.png" alt="Colorful unicorn illustration" /></div>
-      <p class="muted">Change your profile details and club preferences. These settings stay on this computer.</p>
+      <div class="settings-heading"><div class="section-heading"><div><div class="eyebrow" data-i18n="settingsEyebrow">Your profile</div><h2 data-i18n="settingsTitle">Settings</h2></div><span class="step" data-i18n="savedLocally">Saved locally</span></div><img class="settings-bird" src="bird-settings.png" alt="Pink bird illustration" /><div class="profile-picture-slot"><span class="profile-picture-label">Profile picture</span><img id="profile-picture-preview" class="profile-picture-preview" alt="Your profile picture preview" /><label class="file-button" for="profile-picture">Choose picture</label><input id="profile-picture" type="file" form="settings-form" accept="image/png,image/jpeg,image/webp" /><small>PNG, JPG, or WEBP up to 500 KB.</small></div><img class="settings-unicorn" src="unicorn-settings.png" alt="Colorful unicorn illustration" /></div>
+      <p class="muted" data-i18n="settingsIntro">Change your profile details and club preferences. These settings stay on this computer.</p>
       <form id="settings-form">
         <div class="field-grid">
-          <div class="field full"><label for="username">Username</label><input id="username" maxlength="40" placeholder="Example: Alex" /></div>
-          <div class="field"><label for="profile-school">School</label><input id="profile-school" maxlength="120" autocomplete="organization" placeholder="Example: Lincoln Middle School" /></div>
-          <div class="field"><label for="profile-address">School address</label><input id="profile-address" maxlength="160" autocomplete="street-address" placeholder="Example: 100 Main Street" /></div>
-          <div class="field full"><label for="favorite-interests">Favorite interests</label><input id="favorite-interests" maxlength="200" placeholder="Example: art, coding, sports" /></div>
-          <div class="field"><label for="language">Language</label><input id="language" list="language-options" maxlength="60" placeholder="Type or choose a language" /><datalist id="language-options"><option value="English"></option><option value="Español"></option><option value="Français"></option><option value="Deutsch"></option><option value="中文"></option><option value="日本語"></option><option value="한국어"></option><option value="العربية"></option><option value="हिन्दी"></option><option value="Português"></option><option value="Русский"></option><option value="Italiano"></option><option value="ไทย"></option><option value="Tiếng Việt"></option><option value="Tagalog"></option><option value="Swahili"></option><option value="Any other language"></option></datalist></div>
-          <div class="field"><label for="preferred-time">Preferred meeting time</label><input id="preferred-time" maxlength="60" placeholder="Example: After school" /></div>
+          <div class="field full"><label for="username" data-i18n="username">Username</label><input id="username" maxlength="40" placeholder="Example: Alex" /></div>
+          <div class="field"><label for="profile-school" data-i18n="school">School</label><input id="profile-school" maxlength="120" autocomplete="organization" placeholder="Example: Lincoln Middle School" /></div>
+          <div class="field"><label for="profile-address" data-i18n="address">School address</label><input id="profile-address" maxlength="160" autocomplete="street-address" placeholder="Example: 100 Main Street" /></div>
+          <div class="field full"><label for="favorite-interests" data-i18n="interests">Favorite interests</label><input id="favorite-interests" maxlength="200" placeholder="Example: art, coding, sports" /></div>
+          <div class="field"><label for="language" data-i18n="language">Language</label><input id="language" list="language-options" maxlength="60" placeholder="Type or choose a language" /><datalist id="language-options"><option value="English"></option><option value="Español"></option><option value="Français"></option><option value="Deutsch"></option><option value="中文"></option><option value="日本語"></option><option value="한국어"></option><option value="العربية"></option><option value="हिन्दी"></option><option value="Português"></option><option value="Русский"></option><option value="Italiano"></option><option value="ไทย"></option><option value="Tiếng Việt"></option><option value="Tagalog"></option><option value="Swahili"></option><option value="Any other language"></option></datalist></div>
+          <div class="field"><label for="preferred-time" data-i18n="meetingTime">Preferred meeting time</label><input id="preferred-time" maxlength="60" placeholder="Example: After school" /></div>
         </div>
-        <div class="form-footer"><span class="privacy-note">Use a school address, never a home address.</span><button id="save-settings" type="submit">Save settings <span>→</span></button></div>
+        <div class="form-footer"><span class="privacy-note">Use a school address, never a home address.</span><button id="save-settings" type="submit" data-i18n="saveSettings">Save settings <span>→</span></button></div>
       </form>
       <div id="settings-status" class="status" aria-live="polite"></div>
     </section>
@@ -76,6 +76,6 @@
   <div id="delete-modal" class="modal-backdrop" hidden><section class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title"><div class="eyebrow">Delete club</div><h2 id="confirm-title">Are you sure?</h2><p id="confirm-copy">This will remove the club from this computer's saved list.</p><div class="confirm-actions"><button id="cancel-delete" class="text-button" type="button">Keep club</button><button id="confirm-delete" class="danger-button" type="button">Yes, delete it</button></div></section></div>
   <div id="safety-modal" class="modal-backdrop" hidden><section class="confirm-modal safety-modal" role="dialog" aria-modal="true" aria-labelledby="safety-title"><div class="eyebrow">School safety check</div><h2 id="safety-title">This club was stopped.</h2><p>The description asked Club Time to ignore school rules or claim official approval. A publisher cannot approve a club just by writing it in the description.</p><p>Please edit the club so it contains honest details for a school adult to review.</p><div class="confirm-actions"><button id="close-safety" class="danger-button" type="button">Go back and edit</button></div></section></div>
   <footer>Club Time · a student project for helping people find a better fit.</footer>
-  <script src="storage.js"></script><script src="app.js"></script>
+  <script src="storage.js"></script><script src="i18n.js"></script><script src="app.js"></script>
 </body>
 </html>

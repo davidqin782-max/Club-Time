@@ -31,6 +31,7 @@
 - Club-card top-left badges now show the creator profile picture. Sample clubs use the Club Time icon and the creator name “Club Time Officials.”
 - Club cards now label the creator clearly as “Creator username.”
 - Settings now saves a language preference. Users can choose a common language or type any other language; the current interface remains English until translations are added.
+- Added popular-language UI labels for English, Spanish, French, Portuguese, Chinese, Hindi, and Arabic. Redaction stays first with readable system fallbacks for scripts it cannot display; club descriptions and AI-generated card text are not automatically translated yet.
 - Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
 - Publisher-created clubs can now be deleted through two confirmations: “Are you sure?” and “Are you for real?”
 - Added gentle entrance, hover, focus, card, button, search, modal, and safety animations with reduced-motion support.
