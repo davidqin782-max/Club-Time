@@ -54,8 +54,8 @@ username.value = savedSettings.username;
 profileSchool.value = savedSettings.school;
 profileAddress.value = savedSettings.address;
 favoriteInterests.value = savedSettings.interests;
-language.value = savedSettings.language;
-applyLanguage(savedSettings.language);
+language.value = LANGUAGE_CODES[savedSettings.language] ? savedSettings.language : 'English';
+applyLanguage(language.value);
 preferredTime.value = savedSettings.preferredTime;
 let currentProfilePicture = savedSettings.profilePicture || DEFAULT_PROFILE_PICTURE;
 
