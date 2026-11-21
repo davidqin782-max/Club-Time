@@ -121,7 +121,7 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .settings.panel input { border-color:#5acbff; background:#17488f; color:white; }
 .settings.panel input, .settings.panel select, .settings.panel option { font-family:'Redaction 50',serif; }
 .language-picker { position:relative; }
-.language-button { width:100%; min-height:60px; display:flex; align-items:center; justify-content:space-between; border:2px solid #5acbff; border-radius:18px; padding:17px 20px; background:linear-gradient(135deg,#2059a6,#123a87); color:white; font:inherit; font-size:18px; cursor:pointer; text-align:left; box-shadow:0 8px 18px #020a2433; }
+.language-button { width:100%; display:flex; align-items:center; justify-content:space-between; border:1px solid #5acbff; border-radius:14px; padding:13px 16px; background:linear-gradient(135deg,#2059a6,#123a87); color:white; font:inherit; cursor:pointer; text-align:left; }
 .language-button:hover, .language-button:focus-visible { background:#2059a6; border-color:#9ae5ff; box-shadow:0 0 0 3px #5acbff55; }
 .language-menu { position:absolute; z-index:10; left:0; right:0; top:calc(100% + 6px); display:grid; gap:4px; padding:8px; border:1px solid #5acbff; border-radius:14px; background:#0b2b69; box-shadow:0 14px 30px #020a24aa; }
 .language-menu[hidden] { display:none; }
