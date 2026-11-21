@@ -9,6 +9,13 @@ const school = document.querySelector('#school');
 const address = document.querySelector('#address');
 const publishButton = document.querySelector('#publish-button');
 const status = document.querySelector('#status');
+const settingsForm = document.querySelector('#settings-form');
+const username = document.querySelector('#username');
+const profileSchool = document.querySelector('#profile-school');
+const profileAddress = document.querySelector('#profile-address');
+const favoriteInterests = document.querySelector('#favorite-interests');
+const preferredTime = document.querySelector('#preferred-time');
+const settingsStatus = document.querySelector('#settings-status');
 const search = document.querySelector('#search');
 const clubsElement = document.querySelector('#clubs');
 const count = document.querySelector('#club-count');
@@ -37,6 +44,12 @@ let activePage = null;
 let pageTransitionTimer = null;
 let currentClubPage = 1;
 const CLUBS_PER_PAGE = 4;
+const savedSettings = loadSettings();
+username.value = savedSettings.username;
+profileSchool.value = savedSettings.school;
+profileAddress.value = savedSettings.address;
+favoriteInterests.value = savedSettings.interests;
+preferredTime.value = savedSettings.preferredTime;
 
 function clubCatalog() {
   return clubs.map(club => ({ id: club.id, name: club.name, summary: club.summary, whoItsFor: club.whoItsFor, tags: club.tags, school: club.school, address: club.address }));
@@ -194,6 +207,12 @@ searchForm.addEventListener('submit', async event => {
   }
   finally { semanticButton.disabled = false; semanticButton.innerHTML = 'Find with AI <span>→</span>'; }
 });
+settingsForm.addEventListener('submit', event => {
+  event.preventDefault();
+  saveSettings({ username: username.value, school: profileSchool.value, address: profileAddress.value, interests: favoriteInterests.value, preferredTime: preferredTime.value });
+  settingsStatus.className = 'status success';
+  settingsStatus.textContent = 'Your settings were saved on this computer.';
+});
 async function loadRecommendations() {
   const profile = loadSearchProfile();
   if (!profile.interests.length) { recommendationStatus.textContent = 'Search for a few interests first, then come back here.'; renderRecommendations([]); return; }
@@ -216,5 +235,5 @@ clubPagination.addEventListener('click', event => {
   renderClubs();
   clubsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
-setPage(location.hash === '#publish' ? 'publish' : location.hash === '#recommendations' ? 'recommendations' : location.hash === '#safety' ? 'safety' : 'find');
+setPage(location.hash === '#publish' ? 'publish' : location.hash === '#recommendations' ? 'recommendations' : location.hash === '#settings' ? 'settings' : location.hash === '#safety' ? 'safety' : 'find');
 renderClubs();

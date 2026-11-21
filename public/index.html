@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><img class="brand-logo" src="club-time-brand.png" alt="" /> <span>Club Time</span></a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find">Find Clubs</a><a href="#recommendations" data-page-link="recommendations">Recommended</a><a href="#publish" data-page-link="publish">Publish a Club</a><a href="#safety" data-page-link="safety">Safety & About</a></nav></header>
+  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><img class="brand-logo" src="club-time-brand.png" alt="" /> <span>Club Time</span></a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find">Find Clubs</a><a href="#recommendations" data-page-link="recommendations">Recommended</a><a href="#publish" data-page-link="publish">Publish a Club</a><a href="#settings" data-page-link="settings">Settings</a><a href="#safety" data-page-link="safety">Safety & About</a></nav></header>
   <main id="top">
     <div id="page-find" class="page-section" data-page-section="find">
     <section class="hero">
@@ -52,6 +52,22 @@
         <div class="form-footer"><span class="privacy-note">Use the school address, never a home address. Your key stays on this computer.</span><button id="publish-button" type="submit">Make club card <span>→</span></button></div>
       </form>
       <div id="status" class="status" aria-live="polite"></div>
+    </section>
+
+    <section class="settings panel page-section" id="settings" data-page-section="settings">
+      <div class="section-heading"><div><div class="eyebrow">Your profile</div><h2>Settings</h2></div><span class="step">Saved locally</span></div>
+      <p class="muted">Change your profile details and club preferences. These settings stay on this computer.</p>
+      <form id="settings-form">
+        <div class="field-grid">
+          <div class="field full"><label for="username">Username</label><input id="username" maxlength="40" placeholder="Example: Alex" /></div>
+          <div class="field"><label for="profile-school">School</label><input id="profile-school" maxlength="120" autocomplete="organization" placeholder="Example: Lincoln Middle School" /></div>
+          <div class="field"><label for="profile-address">School address</label><input id="profile-address" maxlength="160" autocomplete="street-address" placeholder="Example: 100 Main Street" /></div>
+          <div class="field full"><label for="favorite-interests">Favorite interests</label><input id="favorite-interests" maxlength="200" placeholder="Example: art, coding, sports" /></div>
+          <div class="field"><label for="preferred-time">Preferred meeting time</label><input id="preferred-time" maxlength="60" placeholder="Example: After school" /></div>
+        </div>
+        <div class="form-footer"><span class="privacy-note">Use a school address, never a home address.</span><button id="save-settings" type="submit">Save settings <span>→</span></button></div>
+      </form>
+      <div id="settings-status" class="status" aria-live="polite"></div>
     </section>
 
     <section class="safety page-section" id="safety" data-page-section="safety"><div class="about-copy"><div class="eyebrow">About Club Time</div><h2>Find a club that fits.</h2><p>Club Time turns club details into simple cards. The AI helps organize information, but school rules and adult review come first.</p></div><div class="safety-check"><span class="safety-icon">✓</span><div><strong>Adult review</strong><p>New clubs wait for a school adult to review them before students rely on them.</p></div></div></section>
