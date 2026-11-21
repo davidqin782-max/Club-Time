@@ -124,7 +124,11 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .settings.panel #save-settings { background:#5acbff; color:#061338; border-radius:10px; padding:13px 18px; }
 .settings.panel #save-settings:hover { background:#8cddff; }
 .profile-picture-field small { display:block; margin-top:8px; color:#c9e9ff; font-size:11px; }
-.profile-picture-preview { display:block; width:64px; height:64px; margin-top:10px; border:2px solid #5acbff; border-radius:50%; object-fit:cover; background:#17488f; }
+.profile-picture-label { color:white; font-size:12px; }
+.profile-picture-preview { display:block; width:112px; height:112px; border:3px solid #5acbff; border-radius:50%; object-fit:cover; background:#17488f; }
+.profile-picture-slot input[type="file"] { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
+.file-button { display:inline-block; margin:0; padding:8px 12px; border-radius:8px; background:#5acbff; color:#061338 !important; font-size:12px !important; cursor:pointer; }
+.file-button:hover { background:#8cddff; }
 .creator-profile { display:flex; align-items:center; gap:9px; margin:14px 0 2px; color:#c9e9ff; font-size:12px; }
 .creator-profile img { width:32px; height:32px; border:1px solid #5acbff; border-radius:50%; object-fit:cover; background:#17488f; }
 .settings-heading { display:grid; grid-template-columns:1fr auto 1fr; gap:12px; align-items:center; }
@@ -134,9 +138,8 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .settings-unicorn { grid-column:3; justify-self:end; }
 .profile-picture-slot { grid-column:2; display:flex; flex-direction:column; align-items:center; gap:5px; color:#c9e9ff; text-align:center; }
 .profile-picture-slot label { margin:0; color:white; font-size:12px; }
-.profile-picture-slot input { width:105px; font-size:10px; color:#c9e9ff; }
 .profile-picture-slot small { font-size:10px; }
-@media (max-width:700px) { .settings-bird,.settings-unicorn { width:72px; height:72px; } .profile-picture-slot input { width:90px; } .profile-picture-slot .profile-picture-preview { width:58px; height:58px; } }
+@media (max-width:700px) { .settings-bird,.settings-unicorn { width:72px; height:72px; } .profile-picture-slot .profile-picture-preview { width:84px; height:84px; } }
 footer { color:#b9d8f3; }
 
 /* Grow the notecard surface without enlarging its text. */

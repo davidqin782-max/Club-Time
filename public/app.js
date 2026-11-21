@@ -47,15 +47,16 @@ let pageTransitionTimer = null;
 let currentClubPage = 1;
 const CLUBS_PER_PAGE = 4;
 const savedSettings = loadSettings();
+const DEFAULT_PROFILE_PICTURE = 'unicorn-settings.png';
 username.value = savedSettings.username;
 profileSchool.value = savedSettings.school;
 profileAddress.value = savedSettings.address;
 favoriteInterests.value = savedSettings.interests;
 preferredTime.value = savedSettings.preferredTime;
-let currentProfilePicture = savedSettings.profilePicture;
+let currentProfilePicture = savedSettings.profilePicture || DEFAULT_PROFILE_PICTURE;
 
 function validProfilePicture(dataUrl = '') {
-  return /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(dataUrl) && dataUrl.length <= 700000;
+  return dataUrl === DEFAULT_PROFILE_PICTURE || (/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(dataUrl) && dataUrl.length <= 700000);
 }
 
 function showProfilePicturePreview(dataUrl) {
