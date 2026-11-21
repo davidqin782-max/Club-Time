@@ -43,6 +43,7 @@ function loadSettings() {
       school: typeof saved?.school === 'string' ? saved.school.slice(0, 120) : '',
       address: typeof saved?.address === 'string' ? saved.address.slice(0, 160) : '',
       interests: typeof saved?.interests === 'string' ? saved.interests.slice(0, 200) : '',
+      language: typeof saved?.language === 'string' ? saved.language.slice(0, 60) : 'English',
       preferredTime: typeof saved?.preferredTime === 'string' ? saved.preferredTime.slice(0, 60) : '',
       profilePicture: typeof saved?.profilePicture === 'string' ? saved.profilePicture : ''
     };
@@ -55,6 +56,7 @@ function saveSettings(settings) {
     school: String(settings.school || '').trim().slice(0, 120),
     address: String(settings.address || '').trim().slice(0, 160),
     interests: String(settings.interests || '').trim().slice(0, 200),
+    language: String(settings.language || 'English').trim().slice(0, 60),
     preferredTime: String(settings.preferredTime || '').trim().slice(0, 60),
     profilePicture: String(settings.profilePicture || '').slice(0, 700000)
   }));

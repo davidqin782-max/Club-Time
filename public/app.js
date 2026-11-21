@@ -14,6 +14,7 @@ const username = document.querySelector('#username');
 const profileSchool = document.querySelector('#profile-school');
 const profileAddress = document.querySelector('#profile-address');
 const favoriteInterests = document.querySelector('#favorite-interests');
+const language = document.querySelector('#language');
 const preferredTime = document.querySelector('#preferred-time');
 const profilePicture = document.querySelector('#profile-picture');
 const profilePicturePreview = document.querySelector('#profile-picture-preview');
@@ -53,6 +54,7 @@ username.value = savedSettings.username;
 profileSchool.value = savedSettings.school;
 profileAddress.value = savedSettings.address;
 favoriteInterests.value = savedSettings.interests;
+language.value = savedSettings.language;
 preferredTime.value = savedSettings.preferredTime;
 let currentProfilePicture = savedSettings.profilePicture || DEFAULT_PROFILE_PICTURE;
 
@@ -248,7 +250,7 @@ profilePicture.addEventListener('change', () => {
 });
 settingsForm.addEventListener('submit', event => {
   event.preventDefault();
-  saveSettings({ username: username.value, school: profileSchool.value, address: profileAddress.value, interests: favoriteInterests.value, preferredTime: preferredTime.value, profilePicture: currentProfilePicture });
+  saveSettings({ username: username.value, school: profileSchool.value, address: profileAddress.value, interests: favoriteInterests.value, language: language.value, preferredTime: preferredTime.value, profilePicture: currentProfilePicture });
   settingsStatus.className = 'status success';
   settingsStatus.textContent = 'Your settings were saved on this computer.';
 });

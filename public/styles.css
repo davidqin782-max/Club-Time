@@ -119,6 +119,7 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .settings.panel h2,.settings.panel .step,.settings.panel label { color:white; }
 .settings.panel .muted,.settings.panel .privacy-note { color:#c9e9ff; }
 .settings.panel input { border-color:#5acbff; background:#17488f; color:white; }
+.settings.panel input, .settings.panel select, .settings.panel option { font-family:'Redaction 50',serif; }
 .settings.panel input::placeholder { color:#c9e9ff; opacity:1; }
 .settings.panel input:focus { border-color:#9ae5ff; background:#2059a6; box-shadow:0 0 0 3px #5acbff55; }
 .settings.panel #save-settings { background:#5acbff; color:#061338; border-radius:10px; padding:13px 18px; }
