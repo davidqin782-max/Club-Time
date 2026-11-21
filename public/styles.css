@@ -120,6 +120,13 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .settings.panel .muted,.settings.panel .privacy-note { color:#c9e9ff; }
 .settings.panel input { border-color:#5acbff; background:#17488f; color:white; }
 .settings.panel input, .settings.panel select, .settings.panel option { font-family:'Redaction 50',serif; }
+.language-picker { position:relative; }
+.language-button { width:100%; display:flex; align-items:center; justify-content:space-between; border:1px solid #5acbff; border-radius:14px; padding:14px 16px; background:#17488f; color:white; font:inherit; cursor:pointer; text-align:left; }
+.language-button:hover, .language-button:focus-visible { background:#2059a6; border-color:#9ae5ff; box-shadow:0 0 0 3px #5acbff55; }
+.language-menu { position:absolute; z-index:10; left:0; right:0; top:calc(100% + 6px); display:grid; gap:4px; padding:8px; border:1px solid #5acbff; border-radius:14px; background:#0b2b69; box-shadow:0 14px 30px #020a24aa; }
+.language-menu[hidden] { display:none; }
+.language-menu button { border:0; border-radius:9px; padding:10px 12px; background:transparent; color:white; font:inherit; cursor:pointer; text-align:left; }
+.language-menu button:hover, .language-menu button:focus-visible { background:#2059a6; }
 html[lang="zh"] body { font-family:'Redaction 50','Microsoft YaHei','Noto Sans SC',sans-serif; }
 html[lang="hi"] body { font-family:'Redaction 50','Nirmala UI','Noto Sans Devanagari',sans-serif; }
 html[lang="ar"] body { font-family:'Redaction 50','Segoe UI','Noto Sans Arabic',sans-serif; }

@@ -15,6 +15,8 @@ const profileSchool = document.querySelector('#profile-school');
 const profileAddress = document.querySelector('#profile-address');
 const favoriteInterests = document.querySelector('#favorite-interests');
 const language = document.querySelector('#language');
+const languageButton = document.querySelector('#language-button');
+const languageMenu = document.querySelector('#language-menu');
 const preferredTime = document.querySelector('#preferred-time');
 const profilePicture = document.querySelector('#profile-picture');
 const profilePicturePreview = document.querySelector('#profile-picture-preview');
@@ -55,9 +57,27 @@ profileSchool.value = savedSettings.school;
 profileAddress.value = savedSettings.address;
 favoriteInterests.value = savedSettings.interests;
 language.value = LANGUAGE_CODES[savedSettings.language] ? savedSettings.language : 'English';
+updateLanguageButton();
 applyLanguage(language.value);
 preferredTime.value = savedSettings.preferredTime;
 let currentProfilePicture = savedSettings.profilePicture || DEFAULT_PROFILE_PICTURE;
+
+function updateLanguageButton() {
+  languageButton.firstChild.textContent = `${language.value} `;
+}
+
+languageButton.addEventListener('click', () => {
+  languageMenu.hidden = !languageMenu.hidden;
+  languageButton.setAttribute('aria-expanded', String(!languageMenu.hidden));
+});
+languageMenu.addEventListener('click', event => {
+  const choice = event.target.closest('[data-language]');
+  if (!choice) return;
+  language.value = choice.dataset.language;
+  updateLanguageButton();
+  languageMenu.hidden = true;
+  languageButton.setAttribute('aria-expanded', 'false');
+});
 
 function validProfilePicture(dataUrl = '') {
   return APPROVED_PROFILE_ASSETS.has(dataUrl) || (/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(dataUrl) && dataUrl.length <= 700000);

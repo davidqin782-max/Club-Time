@@ -32,6 +32,7 @@
 - Club cards now label the creator clearly as “Creator username.”
 - Settings now saves a language preference with seven popular language choices: English, Spanish, French, Portuguese, Chinese, Hindi, and Arabic.
 - Added popular-language UI labels for English, Spanish, French, Portuguese, Chinese, Hindi, and Arabic. Redaction stays first with readable system fallbacks for scripts it cannot display; club descriptions and AI-generated card text are not automatically translated yet.
+- The language setting is now one button that opens the seven popular-language choices.
 - Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
 - Publisher-created clubs can now be deleted through two confirmations: “Are you sure?” and “Are you for real?”
 - Added gentle entrance, hover, focus, card, button, search, modal, and safety animations with reduced-motion support.
