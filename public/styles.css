@@ -24,6 +24,7 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 .club-pagination button { min-width:34px; height:34px; padding:0 9px; border:1px solid var(--line); border-radius:9px; background:white; color:var(--ink); }
 .club-pagination button:hover:not(:disabled), .club-pagination button.active { background:var(--green); border-color:var(--green); color:white; }
 .club-pagination button:disabled { opacity:.35; cursor:not-allowed; }
+.recommendations.panel { background:transparent; border-color:transparent; box-shadow:none; }
 .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 14px; }
 .field.full { grid-column:1 / -1; }
 .field input { width:100%; border:1px solid var(--line); border-radius:14px; padding:13px 16px; color:var(--ink); background:#fbfdfb; outline:none; }
