@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><img class="brand-logo" src="club-time-brand.png" alt="" /> <span>Club Time</span></a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find">Find Clubs</a><a href="#publish" data-page-link="publish">Publish a Club</a><a href="#safety" data-page-link="safety">Safety & About</a></nav></header>
+  <header class="topbar"><a class="brand" href="#find" data-page-link="find"><img class="brand-logo" src="club-time-brand.png" alt="" /> <span>Club Time</span></a><nav class="top-nav" aria-label="Main navigation"><a href="#find" data-page-link="find">Find Clubs</a><a href="#recommendations" data-page-link="recommendations">Recommended</a><a href="#publish" data-page-link="publish">Publish a Club</a><a href="#safety" data-page-link="safety">Safety & About</a></nav></header>
   <main id="top">
     <div id="page-find" class="page-section" data-page-section="find">
     <section class="hero">
@@ -22,15 +22,17 @@
       <div class="section-heading"><div><div class="eyebrow">Find your match</div><h2>Find a club that fits.</h2></div><span id="club-count" class="count"></span></div>
       <form id="search-form" class="search-row"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Try: a club for making things" /></label><button id="semantic-button" type="submit">Find with AI <span>→</span></button><button id="reset-button" class="text-button" type="button">Reset samples</button></form>
       <div id="search-status" class="search-status" aria-live="polite">Type to search, or use Find with AI to search by meaning.</div>
-      <section class="recommendation-panel" aria-labelledby="recommendation-title">
-        <div><div class="eyebrow">Your club guide</div><h3 id="recommendation-title">Recommend clubs for me</h3><p>Club Time remembers searches on this computer and uses AI to suggest matches from the clubs here.</p></div>
-        <button id="recommend-button" type="button">Recommend for me <span>→</span></button>
-        <div id="recommendation-status" class="search-status" aria-live="polite"></div>
-      </section>
       <div id="clubs" class="club-grid"></div>
       <p id="empty-state" class="empty" hidden>No clubs match yet.</p>
     </section>
     </div>
+
+    <section class="recommendations panel page-section" id="recommendations" data-page-section="recommendations">
+      <div class="section-heading"><div><div class="eyebrow">Your matches</div><h2>Recommended clubs</h2></div><span id="recommendation-count" class="count"></span></div>
+      <div id="recommendation-status" class="search-status" aria-live="polite">Loading your recommendations…</div>
+      <div id="recommendation-clubs" class="club-grid"></div>
+      <p id="recommendation-empty" class="empty" hidden>No recommendations yet. Search for a few interests on Find Clubs first.</p>
+    </section>
 
     <section class="organizer panel page-section" id="publish" data-page-section="publish">
       <div class="section-heading"><div><div class="eyebrow">Use AI once</div><h2>Share a club</h2></div><span class="step">01 / 01</span></div>

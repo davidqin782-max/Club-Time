@@ -16,8 +16,10 @@ const emptyState = document.querySelector('#empty-state');
 const searchForm = document.querySelector('#search-form');
 const semanticButton = document.querySelector('#semantic-button');
 const searchStatus = document.querySelector('#search-status');
-const recommendButton = document.querySelector('#recommend-button');
+const recommendationClubs = document.querySelector('#recommendation-clubs');
+const recommendationCount = document.querySelector('#recommendation-count');
 const recommendationStatus = document.querySelector('#recommendation-status');
+const recommendationEmpty = document.querySelector('#recommendation-empty');
 const deleteModal = document.querySelector('#delete-modal');
 const confirmTitle = document.querySelector('#confirm-title');
 const confirmCopy = document.querySelector('#confirm-copy');
@@ -50,6 +52,7 @@ function setPage(page) {
   if (activePage === null) {
     pageSections.forEach(section => { section.hidden = section.dataset.pageSection !== page; });
     activePage = page;
+    if (page === 'recommendations') loadRecommendations();
     return;
   }
   const currentSections = [...pageSections].filter(section => !section.hidden);
@@ -62,6 +65,7 @@ function setPage(page) {
     pageTransitionTimer = setTimeout(() => nextSections.forEach(section => section.classList.remove('page-enter-up')), 420);
   }, 240);
   activePage = page;
+  if (page === 'recommendations') loadRecommendations();
 }
 
 function escapeHtml(value = '') {
@@ -73,12 +77,8 @@ function matchesSearch(club, query) {
   return query.split(/\s+/).filter(Boolean).every(part => words.some(word => word.includes(part) || part.includes(word)));
 }
 
-function renderClubs() {
-  const term = search.value.trim().toLowerCase();
-  const visible = aiMatches ? aiMatches.map(id => clubs.find(club => club.id === id)).filter(Boolean) : clubs.filter(club => !term || matchesSearch(club, term));
-  count.textContent = `${visible.length} ${visible.length === 1 ? 'club' : 'clubs'}`;
-  clubsElement.innerHTML = visible.map(club => `
-    <article class="club-card">
+function clubCardMarkup(club) {
+  return `<article class="club-card">
       <div class="card-top"><span class="club-badge">${escapeHtml((club.name || 'C').slice(0, 1))}</span><div class="card-actions"><span class="unverified">${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? 'Awaiting adult approval' : club.sample ? 'Approved sample' : 'Unverified'}</span>${club.sample ? '' : `<button class="delete-button" type="button" data-delete-id="${escapeHtml(club.id)}">Delete</button>`}</div></div>
       <h3>${escapeHtml(club.name)}</h3><p class="summary">${escapeHtml(club.summary)}</p>
       ${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? '<div class="approval-note">A school adult must approve this club before students should rely on its details.</div>' : ''}
@@ -88,12 +88,31 @@ function renderClubs() {
       <div class="fit"><span>Good for</span><strong>${escapeHtml(club.whoItsFor)}</strong></div>
       <div class="activities"><span>Try</span><div>${(club.activities || []).map(item => `<span class="pill">${escapeHtml(item)}</span>`).join('')}</div></div>
       <div class="meeting-details"><div><span>Time of day</span><strong>${escapeHtml(club.timeOfDay || 'Not provided yet')}</strong></div><div><span>Day(s)</span><strong>${escapeHtml(club.days || 'Not provided yet')}</strong></div><div><span>How long</span><strong>${escapeHtml(club.duration || 'Not provided yet')}</strong></div><div><span>Classroom</span><strong>${escapeHtml(club.classroom || 'Not provided yet')}</strong></div></div>
-    </article>`).join('');
-  clubsElement.querySelectorAll('.club-card').forEach(card => {
+    </article>`;
+}
+
+function bindCardHover(container) {
+  container.querySelectorAll('.club-card').forEach(card => {
     card.addEventListener('pointerenter', () => card.classList.add('card-hovered'));
     card.addEventListener('pointerleave', () => card.classList.remove('card-hovered'));
   });
+}
+
+function renderClubs() {
+  const term = search.value.trim().toLowerCase();
+  const visible = aiMatches ? aiMatches.map(id => clubs.find(club => club.id === id)).filter(Boolean) : clubs.filter(club => !term || matchesSearch(club, term));
+  count.textContent = `${visible.length} ${visible.length === 1 ? 'club' : 'clubs'}`;
+  clubsElement.innerHTML = visible.map(clubCardMarkup).join('');
+  bindCardHover(clubsElement);
   emptyState.hidden = visible.length > 0;
+}
+
+function renderRecommendations(ids) {
+  const visible = ids.map(id => clubs.find(club => club.id === id)).filter(Boolean);
+  recommendationCount.textContent = `${visible.length} ${visible.length === 1 ? 'club' : 'clubs'}`;
+  recommendationClubs.innerHTML = visible.map(clubCardMarkup).join('');
+  bindCardHover(recommendationClubs);
+  recommendationEmpty.hidden = visible.length > 0;
 }
 
 form.addEventListener('submit', async event => {
@@ -114,7 +133,7 @@ form.addEventListener('submit', async event => {
   finally { publishButton.disabled = false; }
 });
 
-clubsElement.addEventListener('click', event => {
+function handleClubCardClick(event) {
   const button = event.target.closest('[data-delete-id]');
   if (!button) return;
   pendingDeleteId = button.dataset.deleteId;
@@ -122,7 +141,10 @@ clubsElement.addEventListener('click', event => {
   confirmCopy.textContent = 'This will remove the club from this computer\'s saved list.';
   confirmDelete.textContent = 'Yes, continue';
   deleteModal.hidden = false;
-});
+}
+
+clubsElement.addEventListener('click', handleClubCardClick);
+recommendationClubs.addEventListener('click', handleClubCardClick);
 
 cancelDelete.addEventListener('click', () => { pendingDeleteId = null; deleteModal.hidden = true; });
 closeSafety.addEventListener('click', () => { safetyModal.hidden = true; description.focus(); });
@@ -163,20 +185,20 @@ searchForm.addEventListener('submit', async event => {
   }
   finally { semanticButton.disabled = false; semanticButton.innerHTML = 'Find with AI <span>→</span>'; }
 });
-recommendButton.addEventListener('click', async () => {
+async function loadRecommendations() {
   const profile = loadSearchProfile();
-  if (!profile.interests.length) { recommendationStatus.textContent = 'Search for a few interests first, then try recommendations.'; return; }
-  recommendButton.disabled = true; recommendButton.innerHTML = 'Thinking…'; recommendationStatus.textContent = 'AI is choosing clubs from your search history…';
+  if (!profile.interests.length) { recommendationStatus.textContent = 'Search for a few interests first, then come back here.'; renderRecommendations([]); return; }
+  recommendationStatus.textContent = 'Thinking…';
   try {
     const response = await fetch('/api/recommend', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ interests: profile.interests, searchedClubIds: profile.searchedClubIds, clubs: clubCatalog() }) });
     const result = await response.json();
     if (!response.ok) throw new Error(result.error?.message || result.error || 'Recommendations are unavailable.');
-    aiMatches = result.ids; renderClubs(); recommendationStatus.textContent = aiMatches.length ? `Here are ${aiMatches.length} clubs that may fit your interests.` : 'No close club matches yet.';
+    renderRecommendations(result.ids); recommendationStatus.textContent = result.ids.length ? 'These clubs may fit your interests.' : 'No close club matches yet.';
   } catch (error) {
-    aiMatches = localRecommendations(profile); renderClubs();
-    recommendationStatus.textContent = aiMatches.length ? 'AI is unavailable, so these local matches are shown.' : error.message;
-  } finally { recommendButton.disabled = false; recommendButton.innerHTML = 'Recommend for me <span>→</span>'; }
-});
-document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; recommendationStatus.textContent = ''; });
-setPage(location.hash === '#publish' ? 'publish' : location.hash === '#safety' ? 'safety' : 'find');
+    const localIds = localRecommendations(profile); renderRecommendations(localIds);
+    recommendationStatus.textContent = localIds.length ? 'These local matches are shown because AI is unavailable.' : error.message;
+  }
+}
+document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; });
+setPage(location.hash === '#publish' ? 'publish' : location.hash === '#recommendations' ? 'recommendations' : location.hash === '#safety' ? 'safety' : 'find');
 renderClubs();
