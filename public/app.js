@@ -132,7 +132,7 @@ function escapeHtml(value = '') {
 }
 
 function matchesSearch(club, query) {
-  const words = `${club.name} ${club.summary} ${club.whoItsFor} ${(club.tags || []).join(' ')}`.toLowerCase().split(/\W+/).filter(Boolean);
+  const words = `${club.name} ${club.summary} ${club.whoItsFor} ${club.school || ''} ${club.address || ''} ${(club.tags || []).join(' ')}`.toLowerCase().split(/\W+/).filter(Boolean);
   return query.split(/\s+/).filter(Boolean).every(part => words.some(word => word.includes(part) || part.includes(word)));
 }
 
