@@ -55,7 +55,7 @@
     </section>
 
     <section class="settings panel page-section" id="settings" data-page-section="settings">
-      <div class="settings-heading"><div class="section-heading"><div><div class="eyebrow">Your profile</div><h2>Settings</h2></div><span class="step">Saved locally</span></div><img class="settings-bird" src="bird-settings.png" alt="Pink bird illustration" /><img class="settings-unicorn" src="unicorn-settings.png" alt="Colorful unicorn illustration" /></div>
+      <div class="settings-heading"><div class="section-heading"><div><div class="eyebrow">Your profile</div><h2>Settings</h2></div><span class="step">Saved locally</span></div><img class="settings-bird" src="bird-settings.png" alt="Pink bird illustration" /><div class="profile-picture-slot"><label for="profile-picture">Profile picture</label><img id="profile-picture-preview" class="profile-picture-preview" alt="Your profile picture preview" hidden /><input id="profile-picture" type="file" form="settings-form" accept="image/png,image/jpeg,image/webp" /><small>Choose an image</small></div><img class="settings-unicorn" src="unicorn-settings.png" alt="Colorful unicorn illustration" /></div>
       <p class="muted">Change your profile details and club preferences. These settings stay on this computer.</p>
       <form id="settings-form">
         <div class="field-grid">
@@ -64,7 +64,6 @@
           <div class="field"><label for="profile-address">School address</label><input id="profile-address" maxlength="160" autocomplete="street-address" placeholder="Example: 100 Main Street" /></div>
           <div class="field full"><label for="favorite-interests">Favorite interests</label><input id="favorite-interests" maxlength="200" placeholder="Example: art, coding, sports" /></div>
           <div class="field"><label for="preferred-time">Preferred meeting time</label><input id="preferred-time" maxlength="60" placeholder="Example: After school" /></div>
-          <div class="field profile-picture-field"><label for="profile-picture">Profile picture</label><input id="profile-picture" type="file" accept="image/png,image/jpeg,image/webp" /><img id="profile-picture-preview" class="profile-picture-preview" alt="Your profile picture preview" hidden /><small>PNG, JPG, or WEBP up to 500 KB. Saved on this computer only.</small></div>
         </div>
         <div class="form-footer"><span class="privacy-note">Use a school address, never a home address.</span><button id="save-settings" type="submit">Save settings <span>→</span></button></div>
       </form>
