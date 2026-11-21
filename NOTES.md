@@ -24,6 +24,7 @@
 - Added a Settings page for username, school, school address, favorite interests, and preferred meeting time. Settings save in browser localStorage only.
 - Added the provided colorful unicorn image to the Settings page header.
 - Added the provided pink bird image beside the unicorn in the Settings page header.
+- Adjusted the Settings art layout so the title stays clear and both images remain visible on small screens.
 - Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
 - Publisher-created clubs can now be deleted through two confirmations: “Are you sure?” and “Are you for real?”
 - Added gentle entrance, hover, focus, card, button, search, modal, and safety animations with reduced-motion support.
