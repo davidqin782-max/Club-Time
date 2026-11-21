@@ -58,7 +58,7 @@ function escapeHtml(value = '') {
 
 function matchesSearch(club, query) {
   const words = `${club.name} ${club.summary} ${club.whoItsFor} ${(club.tags || []).join(' ')}`.toLowerCase().split(/\W+/).filter(Boolean);
-  return query.split(/\s+/).filter(Boolean).every(part => words.some(word => word.startsWith(part) || part.startsWith(word)));
+  return query.split(/\s+/).filter(Boolean).every(part => words.some(word => word.includes(part) || part.includes(word)));
 }
 
 function renderClubs() {
@@ -134,9 +134,14 @@ searchForm.addEventListener('submit', async event => {
   try {
     const response = await fetch('/api/search', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ query, clubs }) });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || 'Something went wrong.');
+    if (!response.ok) throw new Error(result.error?.message || result.error || 'Something went wrong.');
     aiMatches = result.ids; renderClubs(); searchStatus.textContent = aiMatches.length ? `AI found ${aiMatches.length} club${aiMatches.length === 1 ? '' : 's'} that may fit “${query}”.` : `AI could not find a close match for “${query}”.`;
-  } catch (error) { aiMatches = null; renderClubs(); searchStatus.textContent = error.message; }
+  } catch (error) {
+    aiMatches = null;
+    renderClubs();
+    const localCount = clubs.filter(club => !query || matchesSearch(club, query.toLowerCase())).length;
+    searchStatus.textContent = localCount ? `AI is unavailable, so these ${localCount} local match${localCount === 1 ? '' : 'es'} are shown.` : error.message;
+  }
   finally { semanticButton.disabled = false; semanticButton.innerHTML = 'Find with AI <span>→</span>'; }
 });
 document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; });
