@@ -13,6 +13,7 @@ const search = document.querySelector('#search');
 const clubsElement = document.querySelector('#clubs');
 const count = document.querySelector('#club-count');
 const emptyState = document.querySelector('#empty-state');
+const clubPagination = document.querySelector('#club-pagination');
 const searchForm = document.querySelector('#search-form');
 const semanticButton = document.querySelector('#semantic-button');
 const searchStatus = document.querySelector('#search-status');
@@ -34,6 +35,8 @@ let aiMatches = null;
 let pendingDeleteId = null;
 let activePage = null;
 let pageTransitionTimer = null;
+let currentClubPage = 1;
+const CLUBS_PER_PAGE = 4;
 
 function clubCatalog() {
   return clubs.map(club => ({ id: club.id, name: club.name, summary: club.summary, whoItsFor: club.whoItsFor, tags: club.tags, school: club.school, address: club.address }));
@@ -100,11 +103,15 @@ function bindCardHover(container) {
 
 function renderClubs() {
   const term = search.value.trim().toLowerCase();
-  const visible = aiMatches ? aiMatches.map(id => clubs.find(club => club.id === id)).filter(Boolean) : clubs.filter(club => !term || matchesSearch(club, term));
-  count.textContent = `${visible.length} ${visible.length === 1 ? 'club' : 'clubs'}`;
+  const allVisible = aiMatches ? aiMatches.map(id => clubs.find(club => club.id === id)).filter(Boolean) : clubs.filter(club => !term || matchesSearch(club, term));
+  const totalPages = Math.max(1, Math.ceil(allVisible.length / CLUBS_PER_PAGE));
+  currentClubPage = Math.min(currentClubPage, totalPages);
+  const visible = allVisible.slice((currentClubPage - 1) * CLUBS_PER_PAGE, currentClubPage * CLUBS_PER_PAGE);
+  count.textContent = `${allVisible.length} ${allVisible.length === 1 ? 'club' : 'clubs'}${totalPages > 1 ? ` · page ${currentClubPage} of ${totalPages}` : ''}`;
   clubsElement.innerHTML = visible.map(clubCardMarkup).join('');
   bindCardHover(clubsElement);
-  emptyState.hidden = visible.length > 0;
+  clubPagination.innerHTML = totalPages > 1 ? `<button type="button" class="page-arrow" data-club-page="${Math.max(1, currentClubPage - 1)}" aria-label="Previous club page" ${currentClubPage === 1 ? 'disabled' : ''}>←</button>${Array.from({ length: totalPages }, (_, index) => { const page = index + 1; return `<button type="button" class="page-number${page === currentClubPage ? ' active' : ''}" data-club-page="${page}" aria-label="Club page ${page}" aria-current="${page === currentClubPage ? 'page' : 'false'}">${page}</button>`; }).join('')}<button type="button" class="page-arrow" data-club-page="${Math.min(totalPages, currentClubPage + 1)}" aria-label="Next club page" ${currentClubPage === totalPages ? 'disabled' : ''}>→</button>` : '';
+  emptyState.hidden = allVisible.length > 0;
 }
 
 function renderRecommendations(ids) {
@@ -161,6 +168,7 @@ confirmDelete.addEventListener('click', () => {
 
 search.addEventListener('input', () => {
   aiMatches = null;
+  currentClubPage = 1;
   const query = search.value.trim();
   if (query.length >= 2) rememberSearch(query, clubs.filter(club => matchesSearch(club, query.toLowerCase())));
   searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.';
@@ -170,6 +178,7 @@ searchForm.addEventListener('submit', async event => {
   event.preventDefault();
   const query = search.value.trim();
   if (query.length < 2) { searchStatus.textContent = 'Type an interest or activity first.'; return; }
+  currentClubPage = 1;
   rememberSearch(query, clubs.filter(club => matchesSearch(club, query.toLowerCase())));
   semanticButton.disabled = true; semanticButton.innerHTML = 'Thinking…'; searchStatus.textContent = 'AI is looking for similar meanings…';
   try {
@@ -200,5 +209,12 @@ async function loadRecommendations() {
   }
 }
 document.querySelector('#reset-button').addEventListener('click', () => { clubs = resetClubs(); search.value = ''; aiMatches = null; renderClubs(); status.className = 'status'; status.textContent = ''; searchStatus.textContent = 'Type normally for an instant search, or use Find with AI to search by meaning.'; });
+clubPagination.addEventListener('click', event => {
+  const button = event.target.closest('[data-club-page]');
+  if (!button || button.disabled) return;
+  currentClubPage = Number(button.dataset.clubPage) || 1;
+  renderClubs();
+  clubsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 setPage(location.hash === '#publish' ? 'publish' : location.hash === '#recommendations' ? 'recommendations' : location.hash === '#safety' ? 'safety' : 'find');
 renderClubs();

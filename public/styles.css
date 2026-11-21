@@ -20,6 +20,10 @@ main { max-width:1000px; margin:auto; padding:0 32px 64px; } .hero { padding:70p
 .location-details span { display:block; color:var(--green); font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin-bottom:5px; }
 .location-details strong { display:block; font-size:14px; overflow-wrap:anywhere; }
 @media (max-width:640px) { .location-details { grid-template-columns:1fr; } }
+.club-pagination { display:flex; justify-content:center; align-items:center; gap:8px; margin:24px 0 8px; }
+.club-pagination button { min-width:34px; height:34px; padding:0 9px; border:1px solid var(--line); border-radius:9px; background:white; color:var(--ink); }
+.club-pagination button:hover:not(:disabled), .club-pagination button.active { background:var(--green); border-color:var(--green); color:white; }
+.club-pagination button:disabled { opacity:.35; cursor:not-allowed; }
 .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px 14px; }
 .field.full { grid-column:1 / -1; }
 .field input { width:100%; border:1px solid var(--line); border-radius:14px; padding:13px 16px; color:var(--ink); background:#fbfdfb; outline:none; }
