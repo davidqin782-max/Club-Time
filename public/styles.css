@@ -89,7 +89,7 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .club-card .summary { color:#d9efff; }
 .club-card .fit { border-color:#5aaef0; }
 .club-card .fit strong,.club-card .meeting { color:#d9efff; }
-.club-card:hover { background:#174990; box-shadow:0 16px 34px #0007; border-color:#9ae5ff; }
+.club-card:hover { background:#174990; box-shadow:0 16px 34px #0007; border-color:#9ae5ff; transform:translateY(-5px) scale(1.03); position:relative; z-index:1; }
 .safety { background:#0e3370; border:1px solid #3e9bea; box-shadow:0 14px 34px #0004; }
 .safety h2,.safety strong { color:white; }
 .safety p,.about-copy p { color:#c9e9ff; }
