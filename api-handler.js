@@ -46,11 +46,8 @@ async function handleApiRequest(request, response, route) {
 
     return send(response, 404, { error: 'Not found' });
   } catch (error) {
-    console.error(`AI ${route} failed:`, error.message);
-    const message = route === 'search'
-      ? 'I could not run the AI search right now. Please check the key and your internet connection, then try again.'
-      : 'I could not organize that club right now. Please check the key and your internet connection, then try again.';
-    return send(response, 502, { error: message });
+    console.error(`AI ${route} failed:`, error.fix || 'No fix was provided.');
+    return send(response, 502, { error: { message: error.message || 'The AI could not answer this request.', fix: error.fix || 'Check the server configuration and try again.' } });
   }
 }
 

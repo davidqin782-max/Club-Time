@@ -2,14 +2,14 @@
 
 ### How to run it
 
-1. Make sure your real `OPENAI_API_KEY` is in `.env`.
+1. Make sure your real `KEYGEN_URL` and `KEYGEN_TOKEN` are in `.env`.
 2. Run: `npm start`
 3. Open http://localhost:3000 in a browser.
 
 ### Done
 
 - Version 1 has a simple publish flow: enter one club description, ask the AI to organize it, review the result as a club card, and search saved clubs.
-- The local server reads the key from `.env` and calls `gpt-5.6-luna`; the key is never sent to the page.
+- The local server uses server-only `getKey()` to get a temporary key from MindDo and calls `gpt-5.6-luna`; the key is never sent to the page.
 - Tested the real publish flow successfully: the AI organized a made-up photography club, the page showed “Thinking…”, and the result saved locally.
 - Added an optional “Find with AI” search action that matches the meaning of a student's words to saved club interests; normal typing search stays instant and local.
 - Normal search also understands partial words, so searching `create` finds “Creative Makers” immediately.
@@ -35,9 +35,9 @@
 - Saves on this computer only for now.
 - After each save point, push it to GitHub.
 - Vercel setup: connect this GitHub repository, keep the project root as the root directory, and leave the build command blank. Vercel serves the page files and the `api/organize.js` and `api/search.js` server functions automatically.
-- Vercel environment setting: add `OPENAI_API_KEY` with the real key for Production, Preview, and Development as needed. Do not commit or upload `.env`.
-- The local page loaded successfully during the Vercel check. The AI check returned 401, which means OpenAI rejected the current local key; replace it before expecting AI answers online.
+- Vercel environment settings: add `KEYGEN_URL` and `KEYGEN_TOKEN` for Production, Preview, and Development as needed. Do not commit or upload `.env`.
 - Browser files are served from `public/` on Vercel, while the local `server.js` stays available for `npm start`.
+- The AI key comes from the server-only `getKey()` helper, which gets a temporary key from MindDo and refreshes it after expiration or an invalid-key response.
 
 ### Maybe Later
 

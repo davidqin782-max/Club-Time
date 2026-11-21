@@ -91,7 +91,7 @@ form.addEventListener('submit', async event => {
     const club = await response.json();
     if (!response.ok) {
       if (club.blocked) { safetyModal.hidden = false; return; }
-      throw new Error(club.error || 'Something went wrong.');
+      throw new Error(club.error?.message || club.error || 'Something went wrong.');
     }
     clubs = [addClub(club), ...clubs]; renderClubs(); form.reset(); status.className = 'status success'; status.textContent = 'Published! Your club is now awaiting adult approval.'; setPage('find');
     setTimeout(() => document.querySelector('.clubs-section').scrollIntoView({ behavior: 'smooth', block: 'start' }), 260);

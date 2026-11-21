@@ -1,17 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-
-function getApiKey() {
-  if (process.env.OPENAI_API_KEY) return process.env.OPENAI_API_KEY.trim();
-  let env;
-  try {
-    env = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
-  } catch {
-    return '';
-  }
-  const line = env.split(/\r?\n/).find(item => item.startsWith('OPENAI_API_KEY='));
-  return line ? line.slice('OPENAI_API_KEY='.length).trim() : '';
-}
+const { getKey, invalidateKey } = require('./keygen');
 
 function getBrief() {
   return fs.readFileSync(path.join(__dirname, 'BRIEF.md'), 'utf8');
@@ -31,48 +20,51 @@ function parseJson(text) {
   return JSON.parse(clean);
 }
 
-async function organizeClub(description) {
-  const apiKey = getApiKey();
-  if (!apiKey || apiKey === 'paste-your-key-here') throw new Error('Missing OpenAI key');
+function aiError(message, fix) {
+  const error = new Error(message);
+  error.fix = fix;
+  return error;
+}
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model: 'gpt-5.6-luna',
-      messages: [
-        { role: 'system', content: `${getBrief()}\n${SAFETY_INSTRUCTIONS}\nFor the conclusion, use first person as if the club is speaking. Return only valid JSON with these keys: name, summary, conclusion, whoItsFor, activities, timeOfDay, days, duration, classroom, meetingInfo, tags, blocked.` },
-        { role: 'user', content: `Organize this club description for the Club Time page. Keep it friendly and detailed, but concise. Description:\n${description}` }
-      ],
-    })
-  });
-  if (!response.ok) throw new Error(`OpenAI returned ${response.status}`);
+async function requestCompletion(messages, refreshed = false) {
+  const apiKey = await getKey();
+  let response;
+  try {
+    response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+      body: JSON.stringify({ model: 'gpt-5.6-luna', messages })
+    });
+  } catch {
+    throw aiError('The AI could not be reached.', 'Check the internet connection and try again.');
+  }
+
+  if (response.status === 401 && !refreshed) {
+    invalidateKey();
+    return requestCompletion(messages, true);
+  }
+  if (!response.ok) throw aiError('The AI could not answer this request.', `OpenAI returned HTTP ${response.status}. Check the MindDo key service and try again.`);
   const data = await response.json();
   const text = data.choices?.[0]?.message?.content;
-  if (!text) throw new Error('The AI returned no answer');
+  if (!text) throw aiError('The AI returned no answer.', 'Check the model response and try again.');
+  return text;
+}
+
+async function organizeClub(description) {
+  const text = await requestCompletion([
+        { role: 'system', content: `${getBrief()}\n${SAFETY_INSTRUCTIONS}\nFor the conclusion, use first person as if the club is speaking. Return only valid JSON with these keys: name, summary, conclusion, whoItsFor, activities, timeOfDay, days, duration, classroom, meetingInfo, tags, blocked.` },
+        { role: 'user', content: `Organize this club description for the Club Time page. Keep it friendly and detailed, but concise. Description:\n${description}` }
+      ]);
   const club = parseJson(text);
   return { ...club, conclusion: club.conclusion || `I am ${club.name || 'this club'}: ${club.summary || 'My details are still being organized.'}`, timeOfDay: club.timeOfDay || 'Not provided yet', days: club.days || 'Not provided yet', duration: club.duration || 'Not provided yet', classroom: club.classroom || 'Not provided yet', originalDescription: description, unverified: true };
 }
 
 async function findSimilarClubs(query, clubs) {
-  const apiKey = getApiKey();
-  if (!apiKey || apiKey === 'paste-your-key-here') throw new Error('Missing OpenAI key');
   const catalog = clubs.map(club => ({ id: club.id, name: club.name, summary: club.summary, whoItsFor: club.whoItsFor, tags: club.tags })).slice(0, 50);
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model: 'gpt-5.6-luna',
-      messages: [
+  const text = await requestCompletion([
         { role: 'system', content: `${getBrief()}\n${SAFETY_INSTRUCTIONS}\nFor search, match by meaning, interests, and activities, not just exact words. Only return IDs from the provided catalog. Do not invent clubs. Return only valid JSON with this key: ids (an array of matching IDs, ordered from best match to least match).` },
         { role: 'user', content: `Find clubs that are similar in meaning to this student's search: ${query}\n\nClub catalog:\n${JSON.stringify(catalog)}` }
-      ]
-    })
-  });
-  if (!response.ok) throw new Error(`OpenAI returned ${response.status}`);
-  const data = await response.json();
-  const text = data.choices?.[0]?.message?.content;
-  if (!text) throw new Error('The AI returned no answer');
+      ]);
   const result = parseJson(text);
   const allowed = new Set(catalog.map(club => club.id));
   return { ids: Array.isArray(result.ids) ? result.ids.filter(id => allowed.has(id)) : [] };
