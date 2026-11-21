@@ -124,8 +124,9 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .settings.panel #save-settings { background:#5acbff; color:#061338; border-radius:10px; padding:13px 18px; }
 .settings.panel #save-settings:hover { background:#8cddff; }
 .settings-heading { position:relative; min-height:150px; }
+.settings-bird { position:absolute; left:8px; top:-20px; width:125px; height:125px; object-fit:contain; filter:drop-shadow(0 10px 12px #0005); animation:soft-pulse 3s .5s ease-in-out infinite; }
 .settings-unicorn { position:absolute; right:8px; top:-28px; width:150px; height:150px; object-fit:contain; filter:drop-shadow(0 10px 12px #0005); animation:soft-pulse 3s ease-in-out infinite; }
-@media (max-width:700px) { .settings-unicorn { width:105px; height:105px; top:-8px; right:0; } .settings-heading .section-heading { padding-right:90px; } }
+@media (max-width:700px) { .settings-bird { width:90px; height:90px; top:0; left:0; } .settings-unicorn { width:105px; height:105px; top:-8px; right:0; } .settings-heading .section-heading { padding:0 80px; } }
 footer { color:#b9d8f3; }
 
 /* Grow the notecard surface without enlarging its text. */
