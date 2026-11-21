@@ -48,6 +48,7 @@ let currentClubPage = 1;
 const CLUBS_PER_PAGE = 4;
 const savedSettings = loadSettings();
 const DEFAULT_PROFILE_PICTURE = 'unicorn-settings.png';
+const APPROVED_PROFILE_ASSETS = new Set([DEFAULT_PROFILE_PICTURE, 'club-time-icon-white.png']);
 username.value = savedSettings.username;
 profileSchool.value = savedSettings.school;
 profileAddress.value = savedSettings.address;
@@ -56,8 +57,11 @@ preferredTime.value = savedSettings.preferredTime;
 let currentProfilePicture = savedSettings.profilePicture || DEFAULT_PROFILE_PICTURE;
 
 function validProfilePicture(dataUrl = '') {
-  return dataUrl === DEFAULT_PROFILE_PICTURE || (/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(dataUrl) && dataUrl.length <= 700000);
+  return APPROVED_PROFILE_ASSETS.has(dataUrl) || (/^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(dataUrl) && dataUrl.length <= 700000);
 }
+
+function creatorPictureFor(club) { return club.sample ? 'club-time-icon-white.png' : (validProfilePicture(club.creatorProfilePicture) ? club.creatorProfilePicture : DEFAULT_PROFILE_PICTURE); }
+function creatorNameFor(club) { return club.sample ? 'Club Time Officials' : (club.creatorName || 'Club creator'); }
 
 function showProfilePicturePreview(dataUrl) {
   if (!validProfilePicture(dataUrl)) { profilePicturePreview.hidden = true; profilePicturePreview.removeAttribute('src'); return; }
@@ -111,8 +115,8 @@ function matchesSearch(club, query) {
 
 function clubCardMarkup(club) {
   return `<article class="club-card">
-      <div class="card-top"><span class="club-badge">${escapeHtml((club.name || 'C').slice(0, 1))}</span><div class="card-actions"><span class="unverified">${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? 'Awaiting adult approval' : club.sample ? 'Approved sample' : 'Unverified'}</span>${club.sample ? '' : `<button class="delete-button" type="button" data-delete-id="${escapeHtml(club.id)}">Delete</button>`}</div></div>
-      ${validProfilePicture(club.creatorProfilePicture) ? `<div class="creator-profile"><img src="${escapeHtml(club.creatorProfilePicture)}" alt="${escapeHtml(club.creatorName || 'Club creator')} profile picture" /><span>Created by ${escapeHtml(club.creatorName || 'Club creator')}</span></div>` : ''}
+      <div class="card-top"><span class="club-badge creator-badge"><img class="creator-badge-image" src="${escapeHtml(creatorPictureFor(club))}" alt="${escapeHtml(creatorNameFor(club))} profile picture" /></span><div class="card-actions"><span class="unverified">${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? 'Awaiting adult approval' : club.sample ? 'Approved sample' : 'Unverified'}</span>${club.sample ? '' : `<button class="delete-button" type="button" data-delete-id="${escapeHtml(club.id)}">Delete</button>`}</div></div>
+      <div class="creator-profile"><span>Created by ${escapeHtml(creatorNameFor(club))}</span></div>
       <h3>${escapeHtml(club.name)}</h3><p class="summary">${escapeHtml(club.summary)}</p>
       ${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? '<div class="approval-note">A school adult must approve this club before students should rely on its details.</div>' : ''}
       <div class="conclusion"><span>Club conclusion</span><p>${escapeHtml(club.conclusion || `I am ${club.name}: ${club.summary}`)}</p></div>

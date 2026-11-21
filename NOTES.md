@@ -28,6 +28,7 @@
 - Added a local profile-picture picker and preview. New clubs save the creator's username and profile picture so it can appear on that club card; images are limited to PNG/JPG/WEBP files up to 500 KB.
 - Centered the profile-picture control between the bird and unicorn on the Settings page.
 - Made the profile picture larger, added the unicorn as the default picture, and replaced the browser file control with an English “Choose picture” button.
+- Club-card top-left badges now show the creator profile picture. Sample clubs use the Club Time icon and the creator name “Club Time Officials.”
 - Club cards now show a first-person conclusion plus time of day, day(s), duration, and classroom; missing details say “Not provided yet.”
 - Publisher-created clubs can now be deleted through two confirmations: “Are you sure?” and “Are you for real?”
 - Added gentle entrance, hover, focus, card, button, search, modal, and safety animations with reduced-motion support.
