@@ -116,7 +116,7 @@ function matchesSearch(club, query) {
 function clubCardMarkup(club) {
   return `<article class="club-card">
       <div class="card-top"><span class="club-badge creator-badge"><img class="creator-badge-image" src="${escapeHtml(creatorPictureFor(club))}" alt="${escapeHtml(creatorNameFor(club))} profile picture" /></span><div class="card-actions"><span class="unverified">${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? 'Awaiting adult approval' : club.sample ? 'Approved sample' : 'Unverified'}</span>${club.sample ? '' : `<button class="delete-button" type="button" data-delete-id="${escapeHtml(club.id)}">Delete</button>`}</div></div>
-      <div class="creator-profile"><span>Created by ${escapeHtml(creatorNameFor(club))}</span></div>
+      <div class="creator-profile"><span>Creator username: ${escapeHtml(creatorNameFor(club))}</span></div>
       <h3>${escapeHtml(club.name)}</h3><p class="summary">${escapeHtml(club.summary)}</p>
       ${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? '<div class="approval-note">A school adult must approve this club before students should rely on its details.</div>' : ''}
       <div class="conclusion"><span>Club conclusion</span><p>${escapeHtml(club.conclusion || `I am ${club.name}: ${club.summary}`)}</p></div>
