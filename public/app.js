@@ -15,6 +15,8 @@ const profileSchool = document.querySelector('#profile-school');
 const profileAddress = document.querySelector('#profile-address');
 const favoriteInterests = document.querySelector('#favorite-interests');
 const preferredTime = document.querySelector('#preferred-time');
+const profilePicture = document.querySelector('#profile-picture');
+const profilePicturePreview = document.querySelector('#profile-picture-preview');
 const settingsStatus = document.querySelector('#settings-status');
 const search = document.querySelector('#search');
 const clubsElement = document.querySelector('#clubs');
@@ -50,6 +52,19 @@ profileSchool.value = savedSettings.school;
 profileAddress.value = savedSettings.address;
 favoriteInterests.value = savedSettings.interests;
 preferredTime.value = savedSettings.preferredTime;
+let currentProfilePicture = savedSettings.profilePicture;
+
+function validProfilePicture(dataUrl = '') {
+  return /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(dataUrl) && dataUrl.length <= 700000;
+}
+
+function showProfilePicturePreview(dataUrl) {
+  if (!validProfilePicture(dataUrl)) { profilePicturePreview.hidden = true; profilePicturePreview.removeAttribute('src'); return; }
+  profilePicturePreview.src = dataUrl;
+  profilePicturePreview.hidden = false;
+}
+
+showProfilePicturePreview(currentProfilePicture);
 
 function clubCatalog() {
   return clubs.map(club => ({ id: club.id, name: club.name, summary: club.summary, whoItsFor: club.whoItsFor, tags: club.tags, school: club.school, address: club.address }));
@@ -96,6 +111,7 @@ function matchesSearch(club, query) {
 function clubCardMarkup(club) {
   return `<article class="club-card">
       <div class="card-top"><span class="club-badge">${escapeHtml((club.name || 'C').slice(0, 1))}</span><div class="card-actions"><span class="unverified">${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? 'Awaiting adult approval' : club.sample ? 'Approved sample' : 'Unverified'}</span>${club.sample ? '' : `<button class="delete-button" type="button" data-delete-id="${escapeHtml(club.id)}">Delete</button>`}</div></div>
+      ${validProfilePicture(club.creatorProfilePicture) ? `<div class="creator-profile"><img src="${escapeHtml(club.creatorProfilePicture)}" alt="${escapeHtml(club.creatorName || 'Club creator')} profile picture" /><span>Created by ${escapeHtml(club.creatorName || 'Club creator')}</span></div>` : ''}
       <h3>${escapeHtml(club.name)}</h3><p class="summary">${escapeHtml(club.summary)}</p>
       ${club.approvalStatus === 'pending' || (!club.sample && !club.approvalStatus) ? '<div class="approval-note">A school adult must approve this club before students should rely on its details.</div>' : ''}
       <div class="conclusion"><span>Club conclusion</span><p>${escapeHtml(club.conclusion || `I am ${club.name}: ${club.summary}`)}</p></div>
@@ -147,7 +163,8 @@ form.addEventListener('submit', async event => {
       if (club.blocked) { safetyModal.hidden = false; return; }
       throw new Error(club.error?.message || club.error || 'Something went wrong.');
     }
-    clubs = [addClub(club), ...clubs]; renderClubs(); form.reset(); status.className = 'status success'; status.textContent = 'Published! Your club is now awaiting adult approval.'; setPage('find');
+    const creatorSettings = loadSettings();
+    clubs = [addClub({ ...club, creatorName: creatorSettings.username || 'Club creator', creatorProfilePicture: creatorSettings.profilePicture }), ...clubs]; renderClubs(); form.reset(); status.className = 'status success'; status.textContent = 'Published! Your club is now awaiting adult approval.'; setPage('find');
     setTimeout(() => document.querySelector('.clubs-section').scrollIntoView({ behavior: 'smooth', block: 'start' }), 260);
   } catch (error) { status.className = 'status error'; status.textContent = error.message; }
   finally { publishButton.disabled = false; }
@@ -207,9 +224,26 @@ searchForm.addEventListener('submit', async event => {
   }
   finally { semanticButton.disabled = false; semanticButton.innerHTML = 'Find with AI <span>→</span>'; }
 });
+profilePicture.addEventListener('change', () => {
+  const file = profilePicture.files?.[0];
+  if (!file) return;
+  if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type) || file.size > 500 * 1024) {
+    profilePicture.value = '';
+    settingsStatus.className = 'status error';
+    settingsStatus.textContent = 'Choose a PNG, JPG, or WEBP image no larger than 500 KB.';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    if (!validProfilePicture(reader.result)) { settingsStatus.className = 'status error'; settingsStatus.textContent = 'That image could not be used.'; return; }
+    currentProfilePicture = reader.result;
+    showProfilePicturePreview(currentProfilePicture);
+  };
+  reader.readAsDataURL(file);
+});
 settingsForm.addEventListener('submit', event => {
   event.preventDefault();
-  saveSettings({ username: username.value, school: profileSchool.value, address: profileAddress.value, interests: favoriteInterests.value, preferredTime: preferredTime.value });
+  saveSettings({ username: username.value, school: profileSchool.value, address: profileAddress.value, interests: favoriteInterests.value, preferredTime: preferredTime.value, profilePicture: currentProfilePicture });
   settingsStatus.className = 'status success';
   settingsStatus.textContent = 'Your settings were saved on this computer.';
 });

@@ -123,6 +123,10 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .settings.panel input:focus { border-color:#9ae5ff; background:#2059a6; box-shadow:0 0 0 3px #5acbff55; }
 .settings.panel #save-settings { background:#5acbff; color:#061338; border-radius:10px; padding:13px 18px; }
 .settings.panel #save-settings:hover { background:#8cddff; }
+.profile-picture-field small { display:block; margin-top:8px; color:#c9e9ff; font-size:11px; }
+.profile-picture-preview { display:block; width:64px; height:64px; margin-top:10px; border:2px solid #5acbff; border-radius:50%; object-fit:cover; background:#17488f; }
+.creator-profile { display:flex; align-items:center; gap:9px; margin:14px 0 2px; color:#c9e9ff; font-size:12px; }
+.creator-profile img { width:32px; height:32px; border:1px solid #5acbff; border-radius:50%; object-fit:cover; background:#17488f; }
 .settings-heading { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .settings-heading .section-heading { grid-column:1 / -1; position:relative; z-index:1; }
 .settings-bird,.settings-unicorn { position:static; width:125px; height:125px; object-fit:contain; filter:drop-shadow(0 10px 12px #0005); animation:soft-pulse 3s ease-in-out infinite; }
