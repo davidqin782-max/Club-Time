@@ -38,6 +38,7 @@
 - Vercel environment settings: add `KEYGEN_URL` and `KEYGEN_TOKEN` for Production, Preview, and Development as needed. Do not commit or upload `.env`.
 - Browser files are served from `public/` on Vercel, while the local `server.js` stays available for `npm start`.
 - The AI key comes from the server-only `getKey()` helper, which gets a temporary key from MindDo and refreshes it after expiration or an invalid-key response.
+- The MindDo key can use the OpenAI model `gpt-5.6-luna`.
 
 ### Maybe Later
 
