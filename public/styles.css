@@ -123,7 +123,7 @@ body { background:radial-gradient(circle at 82% 4%, #123a87 0, #07133a 38%, #030
 .language-picker { position:relative; }
 .language-button { width:100%; display:flex; align-items:center; justify-content:space-between; border:1px solid #5acbff; border-radius:14px; padding:13px 16px; background:linear-gradient(135deg,#2059a6,#123a87); color:white; font:inherit; cursor:pointer; text-align:left; }
 .language-button:hover, .language-button:focus-visible { background:#2059a6; border-color:#9ae5ff; box-shadow:0 0 0 3px #5acbff55; }
-.language-menu { position:absolute; z-index:10; left:0; right:0; top:calc(100% + 6px); display:grid; gap:4px; padding:8px; border:1px solid #5acbff; border-radius:14px; background:#0b2b69; box-shadow:0 14px 30px #020a24aa; }
+.language-menu { position:static; z-index:10; width:100%; margin-top:6px; display:grid; gap:4px; padding:8px; border:1px solid #5acbff; border-radius:14px; background:#0b2b69; box-shadow:0 14px 30px #020a24aa; }
 .language-menu[hidden] { display:none; }
 .language-menu button { border:0; border-radius:9px; padding:10px 12px; background:transparent; color:white; font:inherit; cursor:pointer; text-align:left; }
 .language-menu button:hover, .language-menu button:focus-visible { background:#2059a6; }
